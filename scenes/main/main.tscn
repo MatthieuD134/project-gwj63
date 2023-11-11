@@ -1,3 +1,13 @@
-[gd_scene format=3 uid="uid://6tcudoatg4hu"]
+[gd_scene load_steps=3 format=3 uid="uid://6tcudoatg4hu"]
+
+[ext_resource type="PackedScene" uid="uid://ce1ekytxsmo8w" path="res://menus/pause_menu.tscn" id="1_8lp6y"]
+[ext_resource type="PackedScene" uid="uid://djaie613d5doi" path="res://entities/player/player.tscn" id="1_v21l4"]
 
 [node name="Main" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_v21l4")]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+
+[node name="PauseMenu" parent="Player/Camera2D" instance=ExtResource("1_8lp6y")]
+visible = false
