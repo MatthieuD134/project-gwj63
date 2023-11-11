@@ -1,13 +1,32 @@
-[gd_scene load_steps=3 format=3 uid="uid://6tcudoatg4hu"]
+[gd_scene load_steps=5 format=3 uid="uid://6tcudoatg4hu"]
 
 [ext_resource type="PackedScene" uid="uid://ce1ekytxsmo8w" path="res://menus/pause_menu.tscn" id="1_8lp6y"]
+[ext_resource type="PackedScene" uid="uid://dqxxgk3o4nu3m" path="res://entities/cursor/cursor.tscn" id="1_biyqh"]
 [ext_resource type="PackedScene" uid="uid://djaie613d5doi" path="res://entities/player/player.tscn" id="1_v21l4"]
+[ext_resource type="Script" path="res://scenes/common/GameBoard.gd" id="2_3ck6c"]
 
 [node name="Main" type="Node2D"]
+y_sort_enabled = true
 
-[node name="Player" parent="." instance=ExtResource("1_v21l4")]
+[node name="TileMap" type="TileMap" parent="."]
+format = 2
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(556, 323)
+limit_left = 0
+limit_top = 0
 
-[node name="PauseMenu" parent="Player/Camera2D" instance=ExtResource("1_8lp6y")]
+[node name="PauseMenu" parent="Camera2D" instance=ExtResource("1_8lp6y")]
 visible = false
+
+[node name="GameBoard" type="Node2D" parent="."]
+script = ExtResource("2_3ck6c")
+
+[node name="Player" parent="GameBoard" instance=ExtResource("1_v21l4")]
+position = Vector2(160, 160)
+
+[node name="Cursor" parent="GameBoard" instance=ExtResource("1_biyqh")]
+
+[node name="Enemies" type="Node2D" parent="GameBoard"]
+
+[connection signal="accept_pressed" from="GameBoard/Cursor" to="GameBoard" method="_on_cursor_accept_pressed"]

@@ -1,16 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://djaie613d5doi"]
+[gd_scene load_steps=3 format=3 uid="uid://djaie613d5doi"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_0wl2v"]
-[ext_resource type="Texture2D" uid="uid://b4ftw006mha3n" path="res://icon.svg" id="2_317rw"]
+[ext_resource type="Texture2D" uid="uid://bwlm367xolctm" path="res://scenes/common/assets/cat_sprite_sheet.png" id="2_dgii6"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_sjjry"]
-size = Vector2(124, 124)
-
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="Path2D"]
 script = ExtResource("1_0wl2v")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_317rw")
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+rotates = false
+loop = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_sjjry")
+[node name="Sprite2D" type="Sprite2D" parent="PathFollow2D"]
+texture_filter = 1
+position = Vector2(0, -13)
+texture = ExtResource("2_dgii6")
+hframes = 8
+vframes = 10
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
