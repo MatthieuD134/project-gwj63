@@ -13,6 +13,7 @@ const DIRECTIONS = [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]
 
 @onready var enemies: Node2D = $Enemies
 @onready var player: Unit = $Player
+@onready var tilemap: TileMap = $TileMap
 
 var _pathfinder: PathFinder
 
@@ -22,6 +23,7 @@ var _pathfinder: PathFinder
 # reference to the unit.
 # Mapping of coordinates of a cell to a reference to the unit it contains.
 var _units := {}
+var _obstacles := {}
 
 
 # At the start of the game, we initialize the game board. Look at the `_reinitialize()` function below.
@@ -32,7 +34,8 @@ func _ready() -> void:
 
 # Returns `true` if the cell is occupied by a unit.
 func is_occupied(cell: Vector2) -> bool:
-	return true if _units.has(cell) else false
+	if (_units.has(cell) or _obstacles.has(cell)): return true
+	return false
 
 
 # Clears, and refills the `_units` dictionary with game objects that are on the board.
@@ -41,6 +44,11 @@ func _reinitialize() -> void:
 	
 	# register the player as occupying a cell
 	_units[player.cell] = player
+	
+	var obstacles_cells = tilemap.get_used_cells(1) # the obstacles are set in the layer with index 1 in the tilemap
+	
+	for cell in obstacles_cells:
+		_obstacles[Vector2(cell)] = tilemap.get_cell_tile_data(1, cell)
 
 	# In this demo, we loop over the node's children and filter them to find the units. As your game
 	# becomes more complex, you may want to use the node group feature instead to place your units
@@ -117,7 +125,6 @@ func _move_player(new_cell: Vector2) -> void:
 	
 	if is_occupied(new_cell) or not new_cell in walkable_cells:
 		return
-	
 	# We then ask the unit to walk along the path stored in the UnitPath instance and wait until it
 	# finished.
 	player.walk_along(_pathfinder.calculate_point_path(player.cell, new_cell))
