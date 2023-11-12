@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://ce1ekytxsmo8w" path="res://menus/pause_menu.tscn" id="1_8lp6y"]
 [ext_resource type="PackedScene" uid="uid://dqxxgk3o4nu3m" path="res://entities/cursor/cursor.tscn" id="1_biyqh"]
 [ext_resource type="PackedScene" uid="uid://djaie613d5doi" path="res://entities/player/player.tscn" id="1_v21l4"]
-[ext_resource type="Script" path="res://scenes/common/GameBoard.gd" id="2_3ck6c"]
+[ext_resource type="Script" path="res://scenes/common/game_board.gd" id="2_mfebm"]
 
 [node name="Main" type="Node2D"]
 y_sort_enabled = true
@@ -20,13 +20,14 @@ limit_top = 0
 visible = false
 
 [node name="GameBoard" type="Node2D" parent="."]
-script = ExtResource("2_3ck6c")
+script = ExtResource("2_mfebm")
 
 [node name="Player" parent="GameBoard" instance=ExtResource("1_v21l4")]
-position = Vector2(160, 160)
+position = Vector2(16, 16)
 
 [node name="Cursor" parent="GameBoard" instance=ExtResource("1_biyqh")]
 
 [node name="Enemies" type="Node2D" parent="GameBoard"]
 
+[connection signal="cell_changed" from="GameBoard/Player" to="GameBoard" method="_on_player_cell_changed"]
 [connection signal="accept_pressed" from="GameBoard/Cursor" to="GameBoard" method="_on_cursor_accept_pressed"]

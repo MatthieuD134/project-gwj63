@@ -118,11 +118,6 @@ func _move_player(new_cell: Vector2) -> void:
 	if is_occupied(new_cell) or not new_cell in walkable_cells:
 		return
 	
-	# When moving a unit, we need to update our `_units` dictionary. We instantly save it in the
-	# target cell even if the unit itself will take time to walk there.
-	# While it's walking, the player won't be able to issue new commands.
-	_units.erase(player.cell)
-	_units[new_cell] = player
 	# We then ask the unit to walk along the path stored in the UnitPath instance and wait until it
 	# finished.
 	player.walk_along(_pathfinder.calculate_point_path(player.cell, new_cell))
@@ -131,3 +126,9 @@ func _move_player(new_cell: Vector2) -> void:
 
 func _on_cursor_accept_pressed(cell):
 	_move_player(cell)
+
+
+
+func _on_player_cell_changed(prev_cell, new_cell, unit):
+	_units.erase(prev_cell)
+	_units[new_cell] = unit
