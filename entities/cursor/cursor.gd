@@ -35,7 +35,8 @@ var cell := Vector2.ZERO : set = set_cell
 
 # We use the timer to have a cooldown on the cursor movement.
 @onready var _timer: Timer = $Timer
-
+@onready var sprite: Sprite2D = $Sprite2D
+@onready var follow_mouse := true
 
 
 # --------------------
@@ -46,18 +47,26 @@ var cell := Vector2.ZERO : set = set_cell
 func _ready() -> void:
 	_timer.wait_time = ui_cooldown
 	position = grid.calculate_map_position(cell)
+	sprite.global_position = position
+	
+	# disable the mouse so that the sprite referenced in this script is used as replacement
+	# This allows us to animate the cursor if needed
+	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED_HIDDEN)
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if not follow_mouse: return
 	# If the user moves the mouse, we capture that input and update the node's cell in priority.
 	if event is InputEventMouseMotion:
 		self.cell = grid.calculate_grid_coordinates(event.position)
+		sprite.global_position = get_global_mouse_position()
 	# If we are already hovering the cell and click on it, or we press the enter key, the player
 	# wants to interact with that cell.
 	elif event.is_action_pressed("click") or event.is_action_pressed("ui_accept"):
 		#  In that case, we emit a signal to let another node handle that input. The game board will
 		#  have the responsibility of looking at the cell's content.
 		emit_signal("accept_pressed", cell)
+		draw_attention()
 
 		get_viewport().set_input_as_handled()
 
@@ -78,12 +87,16 @@ func _unhandled_input(event: InputEvent) -> void:
 	# function below to see what changes that triggers.
 	if event.is_action("ui_right"):
 		self.cell += Vector2.RIGHT
+		sprite.position = Vector2.ZERO
 	elif event.is_action("ui_up"):
 		self.cell += Vector2.UP
+		sprite.position = Vector2.ZERO
 	elif event.is_action("ui_left"):
 		self.cell += Vector2.LEFT
+		sprite.position = Vector2.ZERO
 	elif event.is_action("ui_down"):
 		self.cell += Vector2.DOWN
+		sprite.position = Vector2.ZERO
 
 
 # We use the draw callback to a rectangular outline the size of a grid cell, with a width of two
@@ -109,3 +122,18 @@ func set_cell(value: Vector2) -> void:
 	position = grid.calculate_map_position(cell)
 	emit_signal("moved", cell)
 	_timer.start()
+
+func draw_attention() -> void:
+	follow_mouse = false
+	var tween = get_tree().create_tween()
+	# animate the global position of the laser sprite to randomly go around the center of the current selected cell
+	var number_of_position := 10
+	for i in range(number_of_position):
+		tween.tween_property(sprite, "global_position", get_random_position_around(self.global_position, 5, 5), 0.5/number_of_position)
+	# once tween is finished, bring back posibility to move the mouse again
+	var resume_mouse_follow = func(): follow_mouse = true
+	tween.connect("finished", resume_mouse_follow)
+
+
+func get_random_position_around(pos: Vector2, rangeX: float, rangeY: float) -> Vector2:
+	return pos + Vector2(randf_range(-rangeX, rangeX), randf_range(-rangeY, rangeY))

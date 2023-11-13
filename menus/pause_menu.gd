@@ -8,7 +8,8 @@ func _ready():
 
 func _process(_delta):
 	if Input.is_action_just_pressed("ui_cancel"):
-		toggle_pause()
+		if pause_menu.is_visible():
+			toggle_pause()
 		
 
 
@@ -52,10 +53,12 @@ func pause() -> void:
 	self.show()
 	get_tree().set_pause(true)
 	initialize_focus()
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func unpause() -> void:
 	self.hide()
 	get_tree().set_pause(false)
+	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED_HIDDEN)
 
 func toggle_pause() -> void:
 	if get_tree().paused: unpause()
