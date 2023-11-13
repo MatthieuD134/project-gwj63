@@ -6,6 +6,10 @@ signal back_button_pressed()
 func _ready():
 	initialize_focus()
 
+func _process(_delta):
+	if Input.is_action_just_pressed("ui_cancel"):
+		back_button_pressed.emit()
+
 
 func _on_back_button_pressed():
 	back_button_pressed.emit()

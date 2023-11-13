@@ -8,7 +8,8 @@ func _ready():
 
 func _process(_delta):
 	if Input.is_action_just_pressed("ui_cancel"):
-		toggle_pause()
+		if pause_menu.is_visible():
+			toggle_pause()
 		
 
 
