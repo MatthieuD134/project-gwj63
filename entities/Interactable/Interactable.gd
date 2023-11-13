@@ -15,6 +15,7 @@ var owners : PackedVector2Array
 @export var break_time : float = 0.0
 @export var resettable : bool = false
 var break_reset
+var occupied : bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -33,7 +34,12 @@ func _process(delta):
 #we have to check to see if we have the correct one.
 func _on_cell_changed(cell : Vector2):
 	if (owners.has(cell)) :
+		occupied = true
 		interact()
+	else:
+		if (occupied):
+			occupied = false
+			reset()
 		
 #This function is a stub here, and must be defined by each child.
 func interact():
@@ -42,6 +48,11 @@ func interact():
 		
 	if usable:
 		use()
+		
+func reset():
+	set_process(false)
+	if resettable:
+		break_time = break_reset
 		
 func use():
 	usable = false
