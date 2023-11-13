@@ -1,6 +1,7 @@
 extends Interactable
 
-var break_time : float
+@export var resettable : bool = false
+@export var break_time : float
 var broken : bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready():

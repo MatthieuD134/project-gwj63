@@ -1,6 +1,6 @@
 extends Interactable
 
-var fixable : bool = false
+@export var fixable : bool = false
 var usable : bool = true
 # Called when the node enters the scene tree for the first time.
 func _ready():

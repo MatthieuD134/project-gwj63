@@ -6,9 +6,11 @@ class_name Interactable
 
 var owners : PackedVector2Array
 
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var gameBoard = get_node("res://scenes/common/GameBoard.gd")
+	var gameBoard = get_node("res://scenes/common/game_board.gd")
 	gameBoard.connect("cell_changed", _on_cell_changed)
 	set_process(false)
 
