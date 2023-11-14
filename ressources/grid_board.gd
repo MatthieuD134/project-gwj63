@@ -7,7 +7,7 @@ extends Resource
 # The grid's size in rows and columns.
 @export var size := Vector2(100, 100)
 # The size of a cell in pixels.
-@export var cell_size := Vector2(16, 16)
+@export var cell_size := Vector2(256, 256)
 
 # Half of ``cell_size``.
 # We will use this to calculate the center of a grid cell in pixels, on the screen.

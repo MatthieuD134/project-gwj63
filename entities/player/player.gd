@@ -26,7 +26,7 @@ signal cell_changed(prev_cell: Vector2, new_cell: Vector2, unit: Unit)
 # We'll use this to limit the cells the player can move to.
 @export var move_range := 6
 # The player's move speed in pixels, when it's moving along a path.
-@export var move_speed := 16.0
+@export var move_speed := 160.0
 
 # Coordinates of the grid's cell the player is on.
 var cell := Vector2.ZERO : set = set_cell
@@ -74,17 +74,6 @@ func _ready():
 		# We create the curve resource here because creating it in the editor prevents us from
 		# moving the unit.
 		curve = Curve2D.new()
-
-#	var points := [
-#		Vector2(1, 0),
-#		Vector2(2, 0),
-#		Vector2(2, 1),
-#		Vector2(2, 2),
-#		Vector2(1, 2),
-#		Vector2(0, 2),
-#		Vector2(0, 1),
-#	]
-#	walk_along(PackedVector2Array(points))
 
 # When active, moves the unit along its `curve` with the help of the PathFollow2D node.
 func _process(delta: float) -> void:
@@ -136,7 +125,9 @@ func interupt_walk():
 	if grid.calculate_map_position(cell) == position: return
 	can_move = false
 	curve.clear_points()
+	# add point where the curent player is currently set
 	curve.add_point(Vector2.ZERO)
+	# add target point, the center of the cell the player is currently at
 	curve.add_point(grid.calculate_map_position(cell) - position)
 	self._is_walking = true
 	await self.walk_finished

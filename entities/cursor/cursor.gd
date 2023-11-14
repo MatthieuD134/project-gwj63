@@ -58,8 +58,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not follow_mouse: return
 	# If the user moves the mouse, we capture that input and update the node's cell in priority.
 	if event is InputEventMouseMotion:
-		self.cell = grid.calculate_grid_coordinates(event.position)
-		sprite.global_position = get_global_mouse_position()
+		var global_mouse_position := get_global_mouse_position()
+		self.cell = grid.calculate_grid_coordinates(global_mouse_position)
+		sprite.global_position = global_mouse_position
 	# If we are already hovering the cell and click on it, or we press the enter key, the player
 	# wants to interact with that cell.
 	elif event.is_action_pressed("click") or event.is_action_pressed("ui_accept"):
@@ -104,7 +105,7 @@ func _unhandled_input(event: InputEvent) -> void:
 func _draw() -> void:
 	# Rect2 is built from the position of the rectangle's top-left corner and its size. To draw the
 	# square around the cell, the start position needs to be `-grid.cell_size / 2`.
-	draw_rect(Rect2(-grid.cell_size / 2, grid.cell_size), Color.RED, false, 2.0)
+	draw_rect(Rect2(-grid.cell_size / 2, grid.cell_size), Color.RED, false, 10.0)
 
 
 # This function controls the cursor's current position.
@@ -128,8 +129,9 @@ func draw_attention() -> void:
 	var tween = get_tree().create_tween()
 	# animate the global position of the laser sprite to randomly go around the center of the current selected cell
 	var number_of_position := 10
+	var movement_range = (grid.cell_size / 3 as Vector2).x
 	for i in range(number_of_position):
-		tween.tween_property(sprite, "global_position", get_random_position_around(self.global_position, 5, 5), 0.5/number_of_position)
+		tween.tween_property(sprite, "global_position", get_random_position_around(self.global_position, movement_range, movement_range), .5/number_of_position)
 	# once tween is finished, bring back posibility to move the mouse again
 	var resume_mouse_follow = func(): follow_mouse = true
 	tween.connect("finished", resume_mouse_follow)
