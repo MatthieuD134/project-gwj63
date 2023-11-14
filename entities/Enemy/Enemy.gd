@@ -1,6 +1,5 @@
 extends Unit
 
-
 #Most interactions define where the enemy is going to move. Instead of coding a
 #lot of interactions here in the enemy script, we just want to make sure the
 #enemy can give necessary information to tell the gameboard where to put things.

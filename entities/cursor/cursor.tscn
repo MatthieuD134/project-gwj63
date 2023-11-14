@@ -1,14 +1,14 @@
 [gd_scene load_steps=3 format=3 uid="uid://dqxxgk3o4nu3m"]
 
-[ext_resource type="Texture2D" uid="uid://b4ftw006mha3n" path="res://icon.svg" id="1_e83b0"]
 [ext_resource type="Script" path="res://entities/cursor/cursor.gd" id="1_hws3c"]
+[ext_resource type="Texture2D" uid="uid://dtea6xn7lit50" path="res://entities/cursor/assets/laser.png" id="2_cj6ei"]
 
 [node name="Cursor" type="Node2D"]
 script = ExtResource("1_hws3c")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.0488281, 0.0488281)
-texture = ExtResource("1_e83b0")
+texture_filter = 1
+texture = ExtResource("2_cj6ei")
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.1
