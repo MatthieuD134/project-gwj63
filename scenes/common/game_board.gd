@@ -24,6 +24,7 @@ var _pathfinder: PathFinder
 # Mapping of coordinates of a cell to a reference to the unit it contains.
 var _units := {}
 var _obstacles := {}
+var _walkable_for_player_only := {}
 
 
 # At the start of the game, we initialize the game board. Look at the `_reinitialize()` function below.
@@ -33,8 +34,9 @@ func _ready() -> void:
 
 
 # Returns `true` if the cell is occupied by a unit.
-func is_occupied(cell: Vector2) -> bool:
+func is_occupied(cell: Vector2, is_player: bool) -> bool:
 	if (_units.has(cell) or _obstacles.has(cell)): return true
+	if not is_player and _walkable_for_player_only.has(cell): return true
 	return false
 
 
@@ -66,11 +68,11 @@ func _reinitialize() -> void:
 
 # Returns an array of cells a given unit can walk using the flood fill algorithm.
 func get_walkable_cells(unit: Unit) -> Array:
-	return _flood_fill(unit.cell, unit.move_range)
+	return _flood_fill(unit.cell, unit.move_range, unit == player)
 
 
 # Returns an array with all the coordinates of walkable cells based on the `max_distance`.
-func _flood_fill(cell: Vector2, max_distance: int) -> Array:
+func _flood_fill(cell: Vector2, max_distance: int, is_player: bool) -> Array:
 	# This is the array of walkable cells the algorithm outputs.
 	var array := []
 	# The way we implemented the flood fill here is by using a stack. In that stack, we store every
@@ -107,11 +109,10 @@ func _flood_fill(cell: Vector2, max_distance: int) -> Array:
 			var coordinates: Vector2 = current + direction
 			# This is an "optimization". It does the same thing as our `if current in array:` above
 			# but repeating it here with the neighbors skips some instructions.
-			if is_occupied(coordinates):
+			if is_occupied(coordinates, is_player):
 				continue
 			if coordinates in array:
 				continue
-
 			# This is where we extend the stack.
 			stack.append(coordinates)
 	return array
@@ -123,7 +124,7 @@ func _move_player(new_cell: Vector2) -> void:
 	var walkable_cells := get_walkable_cells(player)
 	_pathfinder = PathFinder.new(grid, walkable_cells)
 	
-	if is_occupied(new_cell) or not new_cell in walkable_cells:
+	if is_occupied(new_cell, true) or not new_cell in walkable_cells:
 		return
 	# We then ask the unit to walk along the path stored in the UnitPath instance and wait until it
 	# finished.
