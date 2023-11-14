@@ -19,12 +19,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -75.0
-offset_top = -71.5
-offset_right = 75.0
-offset_bottom = 71.5
+offset_left = -184.0
+offset_top = -221.0
+offset_right = -1.0
+offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(2, 2)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainMenuContainer"]
 layout_mode = 2
@@ -33,6 +34,7 @@ alignment = 1
 
 [node name="StartButton" type="Button" parent="MainMenuContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 focus_neighbor_top = NodePath("../QuitButton")
 focus_neighbor_bottom = NodePath("../OptionsButton")
 focus_next = NodePath("../OptionsButton")
@@ -41,6 +43,7 @@ text = "Start"
 
 [node name="OptionsButton" type="Button" parent="MainMenuContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 focus_neighbor_top = NodePath("../StartButton")
 focus_neighbor_bottom = NodePath("../QuitButton")
 focus_next = NodePath("../QuitButton")
@@ -49,6 +52,7 @@ text = "Options"
 
 [node name="QuitButton" type="Button" parent="MainMenuContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 focus_neighbor_top = NodePath("../OptionsButton")
 focus_neighbor_bottom = NodePath("../StartButton")
 focus_next = NodePath("../StartButton")
