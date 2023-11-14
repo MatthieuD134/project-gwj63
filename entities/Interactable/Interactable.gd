@@ -37,7 +37,6 @@ func _process(delta):
 #we have to check to see if we have the correct one.
 func _on_cell_changed(cell : Vector2):
 	if (owners.has(cell)) :
-		interact()
 		occupied = true
 		interact()
 	else:
