@@ -29,6 +29,8 @@ func _ready():
 func _process(delta):
 	if (break_time > 0):
 		break_time -= delta
+	else:
+		reset()
 	
 #We are expecting the signal to reach all of our interactables, meaning
 #we have to check to see if we have the correct one.
