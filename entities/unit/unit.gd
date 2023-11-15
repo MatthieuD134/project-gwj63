@@ -1,7 +1,6 @@
 # Represents the player on the game board.
 # The board manages the Player's position inside the game grid.
 # The player itself is only a visual representation that moves smoothly in the game world.
-# We use the tool mode so the `skin` and `skin_offset` below update in the editor.
 @tool
 extends Path2D
 class_name Unit
@@ -27,6 +26,8 @@ signal cell_changed(prev_cell: Vector2, new_cell: Vector2, unit: Unit)
 @export var move_range := 6
 # The player's move speed in pixels, when it's moving along a path.
 @export var move_speed := 160.0
+# The Unit sprite
+@export var sprite: Sprite2D
 
 # Coordinates of the grid's cell the player is on.
 var cell := Vector2.ZERO : set = set_cell
@@ -47,8 +48,9 @@ var can_move := true
 # When changing the `cell`'s value, we don't want to allow coordinates outside the grid, so we clamp
 # them.
 func set_cell(value: Vector2) -> void:
-	emit_signal("cell_changed", cell, value, self)
+	var old_cell := cell
 	cell = grid.clamp(value)
+	emit_signal("cell_changed", old_cell, value, self)
 
 
 func _set_is_walking(value: bool) -> void:
@@ -62,6 +64,8 @@ func _set_is_walking(value: bool) -> void:
 # --------------------
 
 func _ready():
+	# Make sure the sprite is set as the export variable
+	assert(sprite, "ERROR: You must explicitly specify the sprite for any node inheriting the Unit script")
 	# We'll use the `_process()` callback to move the unit along a path. Unless it has a path to
 	# walk, we don't want it to update every frame. See `walk_along()` below.
 	self.set_process(false)
