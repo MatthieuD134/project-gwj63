@@ -11,7 +11,6 @@ const DIRECTIONS = [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]
 # Once again, we use our grid resource that we explicitly define in the class.
 @export var grid: Resource = preload("res://ressources/grid_board.tres")
 
-@export var enemies: Node2D
 @export var player: Player
 @onready var tilemap: TileMap = $TileMap
 
@@ -25,20 +24,27 @@ var _pathfinder: PathFinder
 var _units := {}
 var _obstacles := {}
 var _walkable_for_player_only := {}
+var _enemy_patrol_key_cells := {}
 
 
 # At the start of the game, we initialize the game board. Look at the `_reinitialize()` function below.
 # It populates our `_units` dictionary.
 func _ready() -> void:
 	_reinitialize()
-	assert(enemies, "Enemies node is null")
 	assert(player, "Player node is null")
 	assert(tilemap, "TileMap node is null")
+	var enemy_nodes = get_tree().get_nodes_in_group("enemies")
+	for enemy in enemy_nodes:
+		if enemy as Enemy:
+			enemy.connect("cell_changed", _on_enemy_cell_changed )
+			enemy.connect("changed_state", _on_enemy_changed_state )
+			enemy.connect("movement_triggered", _on_enemy_movement_triggered )
+			move_enemy_to_next_marker(enemy)
 
 
 # Returns `true` if the cell is occupied by a unit.
 func is_occupied(cell: Vector2, is_player: bool) -> bool:
-	if (_units.has(cell) or _obstacles.has(cell)): return true
+	if ((is_player and _units.has(cell)) or _obstacles.has(cell)): return true
 	if not is_player and _walkable_for_player_only.has(cell): return true
 	return false
 
@@ -54,7 +60,12 @@ func _reinitialize() -> void:
 	
 	for cell in obstacles_cells:
 		_obstacles[Vector2(cell)] = tilemap.get_cell_tile_data(1, cell)
-
+	
+	# register all the marker with their cell position on the grid
+	for marker in get_tree().get_nodes_in_group("enemy_patrol_key_markers"):
+		if marker as Marker2D:
+			_enemy_patrol_key_cells[grid.calculate_grid_coordinates(marker.position)] = marker
+	
 	# In this demo, we loop over the node's children and filter them to find the units. As your game
 	# becomes more complex, you may want to use the node group feature instead to place your units
 	# anywhere in the scene tree.
@@ -129,28 +140,45 @@ func _move_unit(unit: Unit, new_cell: Vector2) -> void:
 	
 	if is_occupied(new_cell, unit == player) or not new_cell in walkable_cells:
 		return
-	
 	# When moving a unit, we need to update our `_units` dictionary. We instantly save it in the
 	# target cell even if the unit itself will take time to walk there.
-	# While it's walking, the player won't be able to issue new commands.
-	_units.erase(player.cell)
+	# While it's walking, the unit won't be able to issue new commands.
+	_units.erase(unit.cell)
 	_units[new_cell] = unit
   
 	# We then ask the unit to walk along the path stored in the UnitPath instance and wait until it
 	# finished.
 	var path := _pathfinder.calculate_point_path(unit.cell, new_cell)
 	# Ensure that the path calculated is within reach
-	# The calculated path includes the player position, so it should include a maximum of the player movement range + 1
+	# The calculated path includes the unit position, so it should include a maximum of the unit movement range + 1
 	# TODO: we might want to remove that check in the future and instead use a system of wether the cell is within reach AND in the unit's sight
-	if path.size() > player.move_range + 1:
+	if path.size() > unit.move_range + 1:
 		return
-	player.walk_along(_pathfinder.calculate_point_path(player.cell, new_cell))
-	await player.walk_finished
+	unit.walk_along(_pathfinder.calculate_point_path(unit.cell, new_cell))
+#	await unit.walk_finished
 
 # player is within range of enemy if positionned on an adjacent tile
 # ie: within a distance of 1 to the enemy's cell
-func is_player_within_enemy_range(enemy: Enemy):
+func is_player_within_enemy_range(enemy: Enemy) -> bool:
 	return player.cell.distance_to(enemy.cell) <= 1
+
+# check if player is within enemy detection
+func is_player_within_enemy_sight(enemy: Enemy) -> bool:
+	return player.cell.distance_to(enemy.cell) <= enemy.detection_distance
+
+# randomly chose a marker that is on a different cell than the current enemy and within range, then move enemy
+func move_enemy_to_next_marker(enemy: Enemy) -> void:
+	var filtered_marker_array = _enemy_patrol_key_cells.keys().filter(func(cell: Vector2): return cell != enemy.cell and cell.distance_to(enemy.cell) <= enemy.move_range)
+	self._move_unit(enemy, filtered_marker_array[randi() % filtered_marker_array.size()])
+
+func move_enemy(enemy: Enemy) -> void:
+	match enemy.current_state:
+		Enemy.game_state.PATROLLING:
+			move_enemy_to_next_marker(enemy)
+		
+		Enemy.game_state.CHASING:
+			_move_unit(enemy, player.cell)
+	
 
 # --------------------------------
 #    EXTERNAL SIGNALS HANDLING
@@ -163,7 +191,14 @@ func _on_cursor_accept_pressed(cell):
 func _on_player_cell_changed(prev_cell, new_cell, unit):
 	_units.erase(prev_cell)
 	_units[new_cell] = unit
-	var enemie_nodes = enemies.get_children()
-	for node in enemie_nodes:
-		if node as Enemy:
-			print(is_player_within_enemy_range(node))
+
+# called whenever an enemy changes cell
+func _on_enemy_cell_changed(prev_cell: Vector2, new_cell: Vector2, unit: Enemy) -> void:
+	_units.erase(prev_cell)
+	_units[new_cell] = unit
+
+func _on_enemy_changed_state(enemy: Enemy, _state: Enemy.game_state) -> void:
+	move_enemy(enemy)
+
+func _on_enemy_movement_triggered(enemy: Enemy) -> void:
+	move_enemy(enemy)
