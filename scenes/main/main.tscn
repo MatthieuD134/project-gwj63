@@ -2,7 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://ce1ekytxsmo8w" path="res://menus/pause_menu.tscn" id="1_8lp6y"]
 [ext_resource type="PackedScene" uid="uid://dqxxgk3o4nu3m" path="res://entities/cursor/cursor.tscn" id="1_biyqh"]
-[ext_resource type="PackedScene" path="res://entities/Units/player/player.tscn" id="1_v21l4"]
 [ext_resource type="Script" path="res://scenes/common/game_board.gd" id="2_mfebm"]
 [ext_resource type="Texture2D" uid="uid://cujmlhqv2wjcw" path="res://scenes/common/assets/table_sprite.png" id="3_bkewj"]
 [ext_resource type="Texture2D" uid="uid://cpk0gt8xxfr20" path="res://scenes/common/assets/floor_tile_shadow.png" id="4_u02gv"]
@@ -10,7 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://cebjcmqt0irm6" path="res://scenes/common/assets/floor_tile_3.png" id="6_0scxy"]
 [ext_resource type="Texture2D" uid="uid://cyr6dryrqspv5" path="res://scenes/common/assets/floor_tile_4.png" id="7_p4cjq"]
 [ext_resource type="Script" path="res://scenes/common/camera.gd" id="8_h8snl"]
-[ext_resource type="PackedScene" uid="uid://bhxf5jlmf7gki" path="res://entities/Units/enemy/enemy.tscn" id="10_1b6nr"]
+[ext_resource type="PackedScene" uid="uid://c2d3ue5lbvhdb" path="res://entities/unit/player/player.tscn" id="9_p1nm4"]
+[ext_resource type="PackedScene" uid="uid://dckc2w61hj6hr" path="res://entities/unit/enemy/enemy.tscn" id="9_sq0c2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xitvv"]
 texture = ExtResource("3_bkewj")
@@ -65,9 +65,11 @@ sources/7 = SubResource("TileSetAtlasSource_ni3fd")
 [node name="Main" type="Node2D"]
 y_sort_enabled = true
 
-[node name="GameBoard" type="Node2D" parent="."]
+[node name="GameBoard" type="Node2D" parent="." node_paths=PackedStringArray("enemies", "player")]
 y_sort_enabled = true
 script = ExtResource("2_mfebm")
+enemies = NodePath("Enemies")
+player = NodePath("Player")
 
 [node name="Camera2D" type="Camera2D" parent="GameBoard" node_paths=PackedStringArray("player")]
 z_index = 100
@@ -96,21 +98,22 @@ layer_2/y_sort_origin = 8
 layer_2/z_index = 1
 layer_2/tile_data = PackedInt32Array()
 
-[node name="Player" parent="GameBoard" instance=ExtResource("1_v21l4")]
-position = Vector2(384, 384)
-move_speed = 1280.0
-
 [node name="Cursor" parent="GameBoard" instance=ExtResource("1_biyqh")]
 z_index = 1
 
 [node name="Enemies" type="Node2D" parent="GameBoard"]
 
-[node name="Enemy" parent="GameBoard/Enemies" instance=ExtResource("10_1b6nr")]
+[node name="Enemy" parent="GameBoard/Enemies" instance=ExtResource("9_sq0c2")]
 position = Vector2(1408, 1408)
+move_speed = 1280.0
+
+[node name="Player" parent="GameBoard" instance=ExtResource("9_p1nm4")]
+position = Vector2(384, 384)
+move_speed = 1280.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("1_8lp6y")]
 
-[connection signal="cell_changed" from="GameBoard/Player" to="GameBoard" method="_on_player_cell_changed"]
 [connection signal="accept_pressed" from="GameBoard/Cursor" to="GameBoard" method="_on_cursor_accept_pressed"]
+[connection signal="cell_changed" from="GameBoard/Player" to="GameBoard" method="_on_player_cell_changed"]

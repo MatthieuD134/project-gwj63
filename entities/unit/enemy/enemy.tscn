@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dckc2w61hj6hr"]
+
+[ext_resource type="Script" path="res://entities/unit/enemy/enemy.gd" id="1_olkum"]
+[ext_resource type="Texture2D" uid="uid://c0ajs05ie6jto" path="res://entities/unit/enemy/assets/enemy_sprite.svg" id="2_748sl"]
+
+[sub_resource type="Curve2D" id="Curve2D_0thfe"]
+
+[node name="Enemy" type="Path2D" node_paths=PackedStringArray("sprite")]
+curve = SubResource("Curve2D_0thfe")
+script = ExtResource("1_olkum")
+sprite = NodePath("PathFollow2D/Sprite2D")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+loop = false
+
+[node name="Sprite2D" type="Sprite2D" parent="PathFollow2D"]
+texture = ExtResource("2_748sl")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

@@ -11,8 +11,8 @@ const DIRECTIONS = [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]
 # Once again, we use our grid resource that we explicitly define in the class.
 @export var grid: Resource = preload("res://ressources/grid_board.tres")
 
-@onready var enemies: Node2D = $Enemies
-@onready var player: Unit = $Player
+@export var enemies: Node2D
+@export var player: Player
 @onready var tilemap: TileMap = $TileMap
 
 var _pathfinder: PathFinder
@@ -31,6 +31,9 @@ var _walkable_for_player_only := {}
 # It populates our `_units` dictionary.
 func _ready() -> void:
 	_reinitialize()
+	assert(enemies, "Enemies node is null")
+	assert(player, "Player node is null")
+	assert(tilemap, "TileMap node is null")
 
 
 # Returns `true` if the cell is occupied by a unit.
@@ -162,5 +165,5 @@ func _on_player_cell_changed(prev_cell, new_cell, unit):
 	_units[new_cell] = unit
 	var enemie_nodes = enemies.get_children()
 	for node in enemie_nodes:
-		if node.is_class("Enemy"):
+		if node as Enemy:
 			print(is_player_within_enemy_range(node))

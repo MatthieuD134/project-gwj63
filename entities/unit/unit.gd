@@ -48,8 +48,9 @@ var can_move := true
 # When changing the `cell`'s value, we don't want to allow coordinates outside the grid, so we clamp
 # them.
 func set_cell(value: Vector2) -> void:
-	emit_signal("cell_changed", cell, value, self)
+	var old_cell := cell
 	cell = grid.clamp(value)
+	emit_signal("cell_changed", old_cell, value, self)
 
 
 func _set_is_walking(value: bool) -> void:

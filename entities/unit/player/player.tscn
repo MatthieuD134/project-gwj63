@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://c2d3ue5lbvhdb"]
+
+[ext_resource type="Script" path="res://entities/unit/player/player.gd" id="1_67pey"]
+[ext_resource type="Texture2D" uid="uid://bss55ojtd5xol" path="res://entities/unit/player/assets/cat_sprite.png" id="2_ygg7e"]
+
+[sub_resource type="Curve2D" id="Curve2D_yi8uf"]
+
+[node name="Player" type="Path2D" node_paths=PackedStringArray("sprite")]
+curve = SubResource("Curve2D_yi8uf")
+script = ExtResource("1_67pey")
+sprite = NodePath("PathFollow2D/Sprite2D")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="."]
+loop = false
+
+[node name="Sprite2D" type="Sprite2D" parent="PathFollow2D"]
+texture = ExtResource("2_ygg7e")
+hframes = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
