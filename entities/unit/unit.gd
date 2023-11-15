@@ -11,7 +11,7 @@ class_name Unit
 # 		SIGNALS
 # --------------------
 
-signal walk_finished()
+signal walk_finished(unit: Unit)
 signal cell_changed(prev_cell: Vector2, new_cell: Vector2, unit: Unit)
 
 
@@ -104,7 +104,7 @@ func _process(delta: float) -> void:
 		position = grid.calculate_map_position(cell)
 		curve.clear_points()
 		# Finally, we emit a signal. We'll use this one with the game board.
-		emit_signal("walk_finished")
+		emit_signal("walk_finished", self)
 
 
 # Starts walking along the `path`.

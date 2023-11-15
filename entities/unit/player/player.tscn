@@ -1,11 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://c2d3ue5lbvhdb"]
+[gd_scene load_steps=6 format=3 uid="uid://c2d3ue5lbvhdb"]
 
 [ext_resource type="Script" path="res://entities/unit/player/player.gd" id="1_67pey"]
 [ext_resource type="Texture2D" uid="uid://bss55ojtd5xol" path="res://entities/unit/player/assets/cat_sprite.png" id="2_ygg7e"]
+[ext_resource type="Script" path="res://entities/unit/player/detection_shape.gd" id="3_umma2"]
 
 [sub_resource type="Curve2D" id="Curve2D_yi8uf"]
 
-[node name="Player" type="Path2D" node_paths=PackedStringArray("sprite")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_2dl0a"]
+
+[node name="Player" type="Path2D" node_paths=PackedStringArray("sprite") groups=["player"]]
 curve = SubResource("Curve2D_yi8uf")
 script = ExtResource("1_67pey")
 sprite = NodePath("PathFollow2D/Sprite2D")
@@ -16,5 +19,13 @@ loop = false
 [node name="Sprite2D" type="Sprite2D" parent="PathFollow2D"]
 texture = ExtResource("2_ygg7e")
 hframes = 5
+
+[node name="PlayerDetectionShape" type="Area2D" parent="PathFollow2D" node_paths=PackedStringArray("unit")]
+collision_mask = 0
+script = ExtResource("3_umma2")
+unit = NodePath("../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/PlayerDetectionShape"]
+shape = SubResource("CircleShape2D_2dl0a")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
