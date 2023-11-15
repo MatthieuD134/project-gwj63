@@ -6,6 +6,7 @@ class_name Interactable
 
 var owners : PackedVector2Array
 
+# Called when the node enters the scene tree for the first time.
 @export_group("Consumable")
 @export var fixable : bool = false
 @export var usable : bool = false
