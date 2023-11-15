@@ -37,14 +37,14 @@ func _ready() -> void:
 	for enemy in enemy_nodes:
 		if enemy as Enemy:
 			enemy.connect("cell_changed", _on_enemy_cell_changed )
-			enemy.connect("changed_state", _on_enemy_changed_state )
 			enemy.connect("movement_triggered", _on_enemy_movement_triggered )
 			move_enemy_to_next_marker(enemy)
 
 
 # Returns `true` if the cell is occupied by a unit.
 func is_occupied(cell: Vector2, is_player: bool) -> bool:
-	if ((is_player and _units.has(cell)) or _obstacles.has(cell)): return true
+#	if ((is_player and _units.has(cell)) or _obstacles.has(cell)): return true
+	if _obstacles.has(cell): return true
 	if not is_player and _walkable_for_player_only.has(cell): return true
 	return false
 
@@ -196,9 +196,6 @@ func _on_player_cell_changed(prev_cell, new_cell, unit):
 func _on_enemy_cell_changed(prev_cell: Vector2, new_cell: Vector2, unit: Enemy) -> void:
 	_units.erase(prev_cell)
 	_units[new_cell] = unit
-
-func _on_enemy_changed_state(enemy: Enemy, _state: Enemy.game_state) -> void:
-	move_enemy(enemy)
 
 func _on_enemy_movement_triggered(enemy: Enemy) -> void:
 	move_enemy(enemy)

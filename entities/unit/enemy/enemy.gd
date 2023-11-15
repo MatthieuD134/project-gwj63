@@ -55,7 +55,7 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 # change the state to patroling if user leaves sight
 func _on_area_2d_area_exited(area: Area2D) -> void:
 	if area as DetectionShape:
-		current_state = game_state.PATROLLING
+		current_state = game_state.SUSPICIOUS
 
 # whenever enemy reach destination, either wait for a while when patrolling or continue chasing player
 func _on_walk_finished(unit: Enemy) -> void:
@@ -64,6 +64,8 @@ func _on_walk_finished(unit: Enemy) -> void:
 			unit.trigger_movement_timer.start()
 		game_state.CHASING:
 			movement_triggered.emit(self)
+		game_state.SUSPICIOUS:
+			current_state = game_state.PATROLLING
 
 
 func _on_trigger_movement_timeout() -> void:
