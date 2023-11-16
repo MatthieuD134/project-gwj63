@@ -1,7 +1,7 @@
 class_name Player
 extends Unit
 
-@onready var _is_hidden : bool = false
+var boardPiece : Interactable@onready var _is_hidden : bool = false
 # whenever an enemy starts chasing the player, they are being added to the array
 @onready var chasers: Array[Enemy] = []
 
@@ -14,6 +14,24 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	super(delta)
+
+#The player and enemy can deal with interactables in a specific way depending
+#on their game state. The cat will take status tags from fixtures and apply
+#them as well as it can. If something is usable, it will be used at that point.
+#If the cat needs to take time breaking through the space, it will stall to
+#work on said space.
+func interact(activePiece):
+	boardPiece = activePiece
+	if (boardPiece == null):
+		self.is_hidden = false
+		return
+	
+	if (boardPiece.Status_tags.has("HIDDEN")):
+		self.is_hidden = true
+	else:
+		self.is_hidden = false
+		
+	boardPiece.interact()
 
 # the player is being chased only when it has chasers in the array
 func is_being_chased() -> bool:
