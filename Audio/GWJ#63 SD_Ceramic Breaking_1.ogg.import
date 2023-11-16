@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dexocg3wycnhh"
+path="res://.godot/imported/GWJ#63 SD_Ceramic Breaking_1.ogg-562e3ff24b8c347e87009df50755cfa2.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/GWJ#63 SD_Ceramic Breaking_1.ogg"
+dest_files=["res://.godot/imported/GWJ#63 SD_Ceramic Breaking_1.ogg-562e3ff24b8c347e87009df50755cfa2.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

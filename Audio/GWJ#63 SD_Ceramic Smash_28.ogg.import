@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dy2ndsmp7a0gr"
+path="res://.godot/imported/GWJ#63 SD_Ceramic Smash_28.ogg-18f288f18d81435d3f3f6215daff4283.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/GWJ#63 SD_Ceramic Smash_28.ogg"
+dest_files=["res://.godot/imported/GWJ#63 SD_Ceramic Smash_28.ogg-18f288f18d81435d3f3f6215daff4283.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

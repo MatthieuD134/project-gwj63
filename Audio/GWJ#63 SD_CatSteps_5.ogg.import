@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://41c1e3y82qk8"
+path="res://.godot/imported/GWJ#63 SD_CatSteps_5.ogg-6800fbd964b0362e32f22f0c0c2175cc.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/GWJ#63 SD_CatSteps_5.ogg"
+dest_files=["res://.godot/imported/GWJ#63 SD_CatSteps_5.ogg-6800fbd964b0362e32f22f0c0c2175cc.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

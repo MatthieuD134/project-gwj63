@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://obduccrjtxob"
+path="res://.godot/imported/GWJ#63 SD_Human FS_18.ogg-8e4699fc3ea91a7c1a7247b26b1ebcaa.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/GWJ#63 SD_Human FS_18.ogg"
+dest_files=["res://.godot/imported/GWJ#63 SD_Human FS_18.ogg-8e4699fc3ea91a7c1a7247b26b1ebcaa.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

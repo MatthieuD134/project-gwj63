@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bsejdn3jxxv0p"
+path="res://.godot/imported/Patrolling Enemy.ogg-89e8e0f9816bd012fd50410c3cf3976e.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/Patrolling Enemy.ogg"
+dest_files=["res://.godot/imported/Patrolling Enemy.ogg-89e8e0f9816bd012fd50410c3cf3976e.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

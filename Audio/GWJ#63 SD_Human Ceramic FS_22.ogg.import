@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ds3o03a0twkl2"
+path="res://.godot/imported/GWJ#63 SD_Human Ceramic FS_22.ogg-7ff0b7df49f46e280f0030a0dfd6312d.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/GWJ#63 SD_Human Ceramic FS_22.ogg"
+dest_files=["res://.godot/imported/GWJ#63 SD_Human Ceramic FS_22.ogg-7ff0b7df49f46e280f0030a0dfd6312d.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
