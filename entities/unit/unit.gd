@@ -69,10 +69,12 @@ func _ready():
 	# We'll use the `_process()` callback to move the unit along a path. Unless it has a path to
 	# walk, we don't want it to update every frame. See `walk_along()` below.
 	self.set_process(false)
-
+	
 	# The following lines initialize the `cell` property and snap the unit to the cell's center on the map.
 	self.cell = grid.calculate_grid_coordinates(position)
 	position = grid.calculate_map_position(cell)
+	
+	self._path_follow.set_rotates(true)
 
 	if not Engine.is_editor_hint():
 		# We create the curve resource here because creating it in the editor prevents us from
@@ -100,9 +102,11 @@ func _process(delta: float) -> void:
 		# curve.
 		# In the process loop, we only moved the sprite, and not the unit itself. The following
 		# lines move the unit in a way that's transparent to the player.
+		var temp_rotation = _path_follow.rotation
 		_path_follow.progress = 0.0
 		position = grid.calculate_map_position(cell)
 		curve.clear_points()
+		_path_follow.rotation = temp_rotation
 		# Finally, we emit a signal. We'll use this one with the game board.
 		emit_signal("walk_finished", self)
 

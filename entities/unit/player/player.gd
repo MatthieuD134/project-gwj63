@@ -5,6 +5,7 @@ var boardPiece : Interactable
 @onready var _is_hidden : bool = false
 # whenever an enemy starts chasing the player, they are being added to the array
 @onready var chasers: Array[Enemy] = []
+@onready var detection_shape : DetectionShape = $PathFollow2D/PlayerDetectionShape
 
 var feet : AudioStreamPlayer
 
@@ -52,7 +53,7 @@ func hide_self() -> void:
 
 # function to be used to unhide player
 func unhide_self() -> void:
-	if self.is_hidden:
+	if self._is_hidden:
 		self._is_hidden = false
 
 # getter function to avoid using the variable directly

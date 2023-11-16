@@ -15,16 +15,16 @@
 
 [sub_resource type="Curve2D" id="Curve2D_0thfe"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_x2cgk"]
-radius = 992.182
-
 [node name="Enemy" type="Path2D" node_paths=PackedStringArray("trigger_movement_timer", "sprite") groups=["enemies"]]
 curve = SubResource("Curve2D_0thfe")
 script = ExtResource("1_olkum")
 trigger_movement_timer = NodePath("TriggerMovement")
+move_range = null
+move_speed = null
 sprite = NodePath("PathFollow2D/Sprite2D")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
+rotates = false
 loop = false
 
 [node name="Sprite2D" type="Sprite2D" parent="PathFollow2D"]
@@ -33,8 +33,8 @@ texture = ExtResource("2_748sl")
 [node name="DetectionArea" type="Area2D" parent="PathFollow2D"]
 collision_layer = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PathFollow2D/DetectionArea"]
-shape = SubResource("CircleShape2D_x2cgk")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PathFollow2D/DetectionArea"]
+polygon = PackedVector2Array(0, 0, 2.08165e-12, 1536, 267, 1513, 525, 1443, 768, 1330, 987, 1177, 1177, 987, 1330, 768, 1443, 525, 1513, 267, 1536, 2.08165e-12, 1513, -267, 1443, -525, 1330, -768, 1177, -987, 987, -1177, 768, -1330, 525, -1443, 267, -1513, 2.08165e-12, -1536)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
@@ -74,6 +74,7 @@ stream = ExtResource("9_phiwa")
 [node name="FootstepTimer" type="Timer" parent="."]
 wait_time = 0.334
 
+[connection signal="cell_changed" from="." to="." method="_on_cell_changed"]
 [connection signal="walk_finished" from="." to="." method="_on_walk_finished"]
 [connection signal="area_entered" from="PathFollow2D/DetectionArea" to="." method="_on_area_2d_area_entered"]
 [connection signal="area_exited" from="PathFollow2D/DetectionArea" to="." method="_on_area_2d_area_exited"]
