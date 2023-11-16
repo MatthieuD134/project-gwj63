@@ -112,8 +112,10 @@ func _on_walk_finished(unit: Enemy) -> void:
 
 # whenever player reach destination, check if he can be chased
 func _on_player_walk_finished(player: Unit) -> void:
-	if player as Player and self.is_player_in_sight(player) and not player.is_hidden():
-		self.chase_player(player)
+	if player as Player:
+		if $PathFollow2D/DetectionArea.overlaps_area(player.detection_shape):
+			if self.is_player_in_sight(player) and not player.is_hidden():
+				self.chase_player(player)
 
 
 func _on_trigger_movement_timeout() -> void:

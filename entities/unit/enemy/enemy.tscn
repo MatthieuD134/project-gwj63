@@ -9,6 +9,8 @@
 curve = SubResource("Curve2D_0thfe")
 script = ExtResource("1_olkum")
 trigger_movement_timer = NodePath("TriggerMovement")
+move_range = null
+move_speed = null
 sprite = NodePath("PathFollow2D/Sprite2D")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]

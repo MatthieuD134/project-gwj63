@@ -151,6 +151,7 @@ z_index = 1
 
 [node name="Enemy" parent="GameBoard/Enemies" instance=ExtResource("9_sq0c2")]
 position = Vector2(1408, 1408)
+current_state = null
 move_speed = 256.0
 
 [node name="Player" parent="GameBoard" instance=ExtResource("9_p1nm4")]
