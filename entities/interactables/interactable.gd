@@ -4,7 +4,7 @@ class_name Interactable
 #This is the parent class for our three secondary tile details. We will create
 #a template here for our three types to follow.
 
-var owners : PackedVector2Array
+@export var owners : PackedVector2Array
 
 # Called when the node enters the scene tree for the first time.
 @export_group("Consumable")
@@ -35,26 +35,31 @@ func _process(delta):
 	
 #We are expecting the signal to reach all of our interactables, meaning
 #we have to check to see if we have the correct one.
-func _on_cell_changed(cell : Vector2):
+func _on_cell_changed(old_cell : Vector2, cell : Vector2, actor : Unit):
 	if (owners.has(cell)) :
+		print("You just entered an Interactable")
 		occupied = true
 		interact()
 	else:
 		if (occupied):
+			print("You just exited an Interactable")
 			occupied = false
 			reset()
 		
 #This function is a stub here, and must be defined by each child.
 func interact():
 	if (break_time > 0):
+		print("This Interactable is a Permeable that requires some work to use")
 		set_process(true)
 		
 	if usable:
+		print("This Interactable is Consumable")
 		use()
 		
 func reset():
 	set_process(false)
 	if resettable:
+		print("You will need to work to reenter this Permeable")
 		break_time = break_reset
 		
 func use():
