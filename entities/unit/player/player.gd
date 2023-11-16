@@ -1,7 +1,8 @@
 class_name Player
 extends Unit
 
-var boardPiece : Interactable@onready var _is_hidden : bool = false
+var boardPiece : Interactable
+@onready var _is_hidden : bool = false
 # whenever an enemy starts chasing the player, they are being added to the array
 @onready var chasers: Array[Enemy] = []
 
@@ -23,13 +24,13 @@ func _process(delta):
 func interact(activePiece):
 	boardPiece = activePiece
 	if (boardPiece == null):
-		self.is_hidden = false
+		self.unhide_self()
 		return
 	
 	if (boardPiece.Status_tags.has("HIDDEN")):
-		self.is_hidden = true
+		self.hide_self()
 	else:
-		self.is_hidden = false
+		self.unhide_self()
 		
 	boardPiece.interact()
 
