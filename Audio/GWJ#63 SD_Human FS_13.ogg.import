@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://yea4734uwvel"
+path="res://.godot/imported/GWJ#63 SD_Human FS_13.ogg-72423e6df6ed2d2937290d75ced90ad6.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/GWJ#63 SD_Human FS_13.ogg"
+dest_files=["res://.godot/imported/GWJ#63 SD_Human FS_13.ogg-72423e6df6ed2d2937290d75ced90ad6.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

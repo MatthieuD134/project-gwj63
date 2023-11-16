@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dih6v55l1hn2j"
+path="res://.godot/imported/GWJ#63 SD_Thump on wood_4.ogg-75993a16b4240fa37ca952e3e3869932.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/GWJ#63 SD_Thump on wood_4.ogg"
+dest_files=["res://.godot/imported/GWJ#63 SD_Thump on wood_4.ogg-75993a16b4240fa37ca952e3e3869932.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

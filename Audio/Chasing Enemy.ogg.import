@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dfayg1f4c8ajf"
+path="res://.godot/imported/Chasing Enemy.ogg-75f61a07c4e47110cfbb829ad0ae3824.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/Chasing Enemy.ogg"
+dest_files=["res://.godot/imported/Chasing Enemy.ogg-75f61a07c4e47110cfbb829ad0ae3824.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4
