@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c0ajs05ie6jto"
-path="res://.godot/imported/enemy_sprite.svg-47169afa227d8fe0b21455174ce222f4.ctex"
+uid="uid://c081w5d3sdbjv"
+path="res://.godot/imported/NPC_FRAMES.png-551f9301170d061565b72354081884ab.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/unit/enemy/assets/enemy_sprite.svg"
-dest_files=["res://.godot/imported/enemy_sprite.svg-47169afa227d8fe0b21455174ce222f4.ctex"]
+source_file="res://entities/unit/enemy/assets/NPC_FRAMES.png"
+dest_files=["res://.godot/imported/NPC_FRAMES.png-551f9301170d061565b72354081884ab.ctex"]
 
 [params]
 
@@ -32,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

@@ -31,6 +31,9 @@ tracks/1/keys = {
 "values": [true]
 }
 
+[sub_resource type="Animation" id="Animation_wlhyn"]
+length = 0.001
+
 [sub_resource type="Animation" id="Animation_buujr"]
 resource_name = "VaseCrush"
 tracks/0/type = "value"
@@ -57,9 +60,6 @@ tracks/1/keys = {
 "update": 1,
 "values": [true]
 }
-
-[sub_resource type="Animation" id="Animation_wlhyn"]
-length = 0.001
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5m7mu"]
 _data = {

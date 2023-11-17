@@ -12,6 +12,8 @@ enum game_state {PATROLLING, SUSPICIOUS, CHASING}
 
 @export var current_state := game_state.PATROLLING : set = update_game_state
 @export var trigger_movement_timer: Timer
+@onready var animation : AnimationPlayer = $AnimationPlayer
+var footstepTimer : Timer
 
 var suspicious_target_cell  := Vector2(0,0)
 
@@ -19,7 +21,8 @@ var suspicious_target_cell  := Vector2(0,0)
 func _ready():
 	super()
 	footR = RandomNumberGenerator.new()
-	self.get_child(get_child_count() - 1).start()
+	footstepTimer = get_child(get_child_count() - 1)
+	footstepTimer.start()
 	self.move_range = 10
 	self.add_to_group("enemies")
 	self.trigger_movement_timer.set_one_shot(true)
@@ -29,6 +32,7 @@ func _ready():
 		player.connect("walk_finished", _on_player_walk_finished )
 	# start timer to trigger movement as well as setting game state
 	self.current_state = game_state.PATROLLING
+	animation.play("Walk")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -84,11 +88,15 @@ func is_player_in_sight() -> bool:
 
 # function to trigger enemy to chase player
 func chase_player(_player: Player) -> void:
+	animation.play("Run")
+	footstepTimer.start()
 	self.update_game_state(game_state.CHASING)
 	movement_triggered.emit(self)
 
 func check_suspicious_cell(suspicious_cell: Vector2) -> void:
 	self.suspicious_target_cell = suspicious_cell
+	animation.play("Walk")
+	footstepTimer.start()
 	self.update_game_state(game_state.SUSPICIOUS)
 	movement_triggered.emit(self)
 
@@ -120,6 +128,8 @@ func _on_walk_finished(unit: Enemy, is_interuption: bool) -> void:
 	else:
 		match current_state:
 			game_state.PATROLLING:
+				animation.play("Idle")
+				footstepTimer.stop()
 				unit.trigger_movement_timer.start()
 			game_state.CHASING:
 				# if player still in sight, chase him, otherwise go to last seen place as suspicious
@@ -131,6 +141,8 @@ func _on_walk_finished(unit: Enemy, is_interuption: bool) -> void:
 				if is_interuption:
 					movement_triggered.emit(self)
 				else:
+					animation.play("Walk")
+					footstepTimer.start()
 					update_game_state(game_state.PATROLLING)
 
 # whenever player reach destination, check if he can be chased
@@ -151,6 +163,8 @@ func _on_player_walk_finished(player: Unit, _is_interuption: bool) -> void:
 
 func _on_trigger_movement_timeout() -> void:
 	if current_state == game_state.PATROLLING:
+		animation.play("Walk")
+		footstepTimer.start()
 		movement_triggered.emit(self)
 
 # called whenever the player cell changes to continue chasing them or change to patrolling

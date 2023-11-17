@@ -1,8 +1,10 @@
-[gd_scene load_steps=21 format=3 uid="uid://6tcudoatg4hu"]
+[gd_scene load_steps=23 format=3 uid="uid://6tcudoatg4hu"]
 
 [ext_resource type="PackedScene" uid="uid://ce1ekytxsmo8w" path="res://menus/pause_menu.tscn" id="1_8lp6y"]
 [ext_resource type="PackedScene" uid="uid://dqxxgk3o4nu3m" path="res://entities/cursor/cursor.tscn" id="1_biyqh"]
+[ext_resource type="PackedScene" uid="uid://cssxleiw3fu6" path="res://entities/interactables/lamp.tscn" id="2_4k1k6"]
 [ext_resource type="Script" path="res://scenes/common/game_board.gd" id="2_mfebm"]
+[ext_resource type="PackedScene" uid="uid://cs5jsca0e365j" path="res://entities/interactables/vase.tscn" id="3_ajq8e"]
 [ext_resource type="Texture2D" uid="uid://cujmlhqv2wjcw" path="res://scenes/common/assets/table_sprite.png" id="3_bkewj"]
 [ext_resource type="Texture2D" uid="uid://cpk0gt8xxfr20" path="res://scenes/common/assets/floor_tile_shadow.png" id="4_u02gv"]
 [ext_resource type="Texture2D" uid="uid://bulg0hgq0jikw" path="res://scenes/common/assets/floor_tile.png" id="5_5tsgi"]
@@ -119,6 +121,14 @@ y_sort_enabled = true
 y_sort_enabled = true
 script = ExtResource("2_mfebm")
 player = NodePath("Player")
+
+[node name="Lamp" parent="GameBoard" instance=ExtResource("2_4k1k6")]
+position = Vector2(1024, 384)
+owners = PackedVector2Array(3, 1)
+
+[node name="Vase" parent="GameBoard" instance=ExtResource("3_ajq8e")]
+position = Vector2(1152, 384)
+owners = PackedVector2Array(4, 1)
 
 [node name="Camera2D" type="Camera2D" parent="GameBoard" node_paths=PackedStringArray("player")]
 z_index = 100
