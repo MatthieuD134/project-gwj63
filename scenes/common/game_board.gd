@@ -232,7 +232,6 @@ func _on_enemy_state_changed(enemy: Enemy, prev_state: Enemy.game_state, state: 
 	self.update_theme_song()
 
 func update_theme_song() -> void:
-	print(player.suspicious_chasers)
 	# first check which theme to play according to player state
 	if player.active_chasers.size() > 0:
 		if theme != $"Chase Theme":
