@@ -27,7 +27,9 @@ func _ready():
 	var player = get_tree().get_first_node_in_group("player")
 	if player as Player:
 		player.connect("cell_changed", _on_player_cell_changed )
-	print(owners)
+	#print(owners)
+	if (enable):
+		report_owners()
 	break_reset = break_time
 	animation.stop(false)
 	#var gameBoard = get_node("GameBoard")
@@ -45,13 +47,15 @@ func _process(delta):
 #We are expecting the signal to reach all of our interactables, meaning
 #we have to check to see if we have the correct one.
 func _on_player_cell_changed(old_cell : Vector2, cell : Vector2, actor : Unit):
-	print("Signal Received")
-	if (owners.has(cell)) :
-		print("You just entered an Interactable")
+	#print("Signal Received")
+	if (owners.has(cell) && !owners.has(old_cell)) :
+		#print("You just entered an Interactable")
 		interact()
+		actor.interact(self)
 	else:
-		if (owners.has(old_cell)):
-			print("You just exited an Interactable")
+		if (owners.has(old_cell) && !owners.has(cell)):
+			#print("You just exited an Interactable")
+			actor.interact(null)
 			reset()
 		
 #This function is the starting point of our interactable code and how they behave.
@@ -76,3 +80,6 @@ func use():
 
 func _on_animation_player_animation_finished(anim_name):
 	animation.stop(true)
+	
+func report_owners():
+	return owners
