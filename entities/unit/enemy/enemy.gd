@@ -39,7 +39,6 @@ func update_game_state(state : game_state) -> void:
 		# add a delay before continuing the patrol when changing state
 		if state == game_state.PATROLLING:
 			trigger_movement_timer.start()
-		
 		changed_state.emit(self, prev_state, state)
 	else:
 		trigger_movement_timer.stop()
@@ -141,7 +140,6 @@ func _on_footstep_timer_timeout():
 	#footstep = get_node("FootStep 0")
 	#print(footstep.get_path())
 	footstep.play()
-  
 # check if player is in range and in sight to start following them
 func _on_cell_changed(_prev_cell, _new_cell, _unit) -> void:
 	match current_state:

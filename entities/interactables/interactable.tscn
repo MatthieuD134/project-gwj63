@@ -1,0 +1,92 @@
+[gd_scene load_steps=8 format=3 uid="uid://b4g4pdy5sh8np"]
+
+[ext_resource type="Script" path="res://entities/interactables/interactable.gd" id="1_1in0o"]
+[ext_resource type="AudioStream" uid="uid://dy2ndsmp7a0gr" path="res://Audio/GWJ#63 SD_Ceramic Smash_28.ogg" id="2_j67iw"]
+[ext_resource type="Texture2D" uid="uid://b5xce0snioe0e" path="res://entities/interactables/Assets/Furniture.png" id="3_wtlss"]
+
+[sub_resource type="Animation" id="Animation_me8wy"]
+resource_name = "LampTopple"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.18, 0.27, 0.36, 0.45, 0.54, 0.63, 0.72, 0.81, 0.9, 0.99),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 11]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("InteractableSound:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.36),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_buujr"]
+resource_name = "VaseCrush"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [24, 25, 26, 27, 28, 29, 30, 31, 32, 33]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("InteractableSound:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.6962),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_wlhyn"]
+length = 0.001
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5m7mu"]
+_data = {
+"LampTopple": SubResource("Animation_me8wy"),
+"RESET": SubResource("Animation_wlhyn"),
+"VaseCrush": SubResource("Animation_buujr")
+}
+
+[node name="Interactable" type="Node2D" node_paths=PackedStringArray("animation")]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_1in0o")
+owners = PackedVector2Array(0, 0)
+animation = NodePath("AnimationPlayer")
+usable = true
+
+[node name="InteractableSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_j67iw")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_5m7mu")
+}
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_wtlss")
+hframes = 12
+vframes = 2
+frame = 11
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

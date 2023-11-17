@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cs5jsca0e365j"]
+
+[ext_resource type="PackedScene" uid="uid://b4g4pdy5sh8np" path="res://entities/interactables/interactable.tscn" id="1_gbaij"]
+[ext_resource type="AudioStream" uid="uid://dexocg3wycnhh" path="res://Audio/GWJ#63 SD_Ceramic Breaking_1.ogg" id="2_l3wn7"]
+
+[node name="Vase" instance=ExtResource("1_gbaij")]
+animation_frames = 11
+animation_title = "VaseCrush"
+
+[node name="InteractableSound" parent="." index="0"]
+stream = ExtResource("2_l3wn7")
+
+[node name="Sprite2D" parent="." index="2"]
+hframes = 24
+frame = 29
