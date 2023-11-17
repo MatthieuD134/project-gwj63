@@ -4,7 +4,13 @@ extends Unit
 var boardPiece : Interactable
 @onready var _is_hidden : bool = false
 # whenever an enemy starts chasing the player, they are being added to the array
-@onready var chasers: Array[Enemy] = []
+@onready var active_chasers: Array[Enemy] = []
+@onready var suspicious_chasers: Array[Enemy] = []
+@onready var detection_shape : DetectionShape = $PathFollow2D/PlayerDetectionShape
+
+var feet : AudioStreamPlayer
+
+var ears : AudioListener2D
 
 var feet : AudioStreamPlayer
 
@@ -41,9 +47,9 @@ func interact(activePiece):
 		
 	boardPiece.interact()
 
-# the player is being chased only when it has chasers in the array
+# the player is being chased only when it has active chasers in the array
 func is_being_chased() -> bool:
-	return self.chasers.size() > 0
+	return self.active_chasers.size() > 0
 
 # function to be used to hide player, only hides if not being chased
 func hide_self() -> void:
@@ -52,7 +58,7 @@ func hide_self() -> void:
 
 # function to be used to unhide player
 func unhide_self() -> void:
-	if self.is_hidden:
+	if self._is_hidden:
 		self._is_hidden = false
 
 # getter function to avoid using the variable directly

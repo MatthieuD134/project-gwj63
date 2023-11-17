@@ -14,7 +14,10 @@ const DIRECTIONS = [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]
 @export var player: Player
 @onready var tilemap: TileMap = $TileMap
 
+var theme : AudioStreamPlayer
+
 var _pathfinder: PathFinder
+
 
 
 # We use a dictionary to keep track of the units that are on the board. Each key-value pair in the
@@ -38,7 +41,10 @@ func _ready() -> void:
 		if enemy as Enemy:
 			enemy.connect("cell_changed", _on_enemy_cell_changed )
 			enemy.connect("movement_triggered", _on_enemy_movement_triggered )
+			enemy.connect("changed_state", _on_enemy_state_changed )
 			move_enemy_to_next_marker(enemy)
+	theme = $"Patrol Theme"
+	theme.play()
 
 
 # Returns `true` if the cell is occupied by a unit.
@@ -81,14 +87,14 @@ func _reinitialize() -> void:
 #		_units[unit.cell] = unit
 
 # Returns an array of cells a given unit can walk using the flood fill algorithm.
-func get_walkable_cells(unit: Unit) -> Array:
+func get_walkable_cells(unit: Unit) -> Array[Vector2]:
 	return _flood_fill(unit.cell, unit.move_range, unit == player)
 
 
 # Returns an array with all the coordinates of walkable cells based on the `max_distance`.
-func _flood_fill(cell: Vector2, max_distance: int, is_player: bool) -> Array:
+func _flood_fill(cell: Vector2, max_distance: int, is_player: bool) -> Array[Vector2]:
 	# This is the array of walkable cells the algorithm outputs.
-	var array := []
+	var array : Array[Vector2]= []
 	# The way we implemented the flood fill here is by using a stack. In that stack, we store every
 	# cell we want to apply the flood fill algorithm to.
 	var stack := [cell]
@@ -140,6 +146,7 @@ func _move_unit(unit: Unit, new_cell: Vector2) -> void:
 	
 	if is_occupied(new_cell, unit == player) or not new_cell in walkable_cells:
 		return
+	
 	# When moving a unit, we need to update our `_units` dictionary. We instantly save it in the
 	# target cell even if the unit itself will take time to walk there.
 	# While it's walking, the unit won't be able to issue new commands.
@@ -148,12 +155,6 @@ func _move_unit(unit: Unit, new_cell: Vector2) -> void:
   
 	# We then ask the unit to walk along the path stored in the UnitPath instance and wait until it
 	# finished.
-	var path := _pathfinder.calculate_point_path(unit.cell, new_cell)
-	# Ensure that the path calculated is within reach
-	# The calculated path includes the unit position, so it should include a maximum of the unit movement range + 1
-	# TODO: we might want to remove that check in the future and instead use a system of wether the cell is within reach AND in the unit's sight
-	if path.size() > unit.move_range + 1:
-		return
 	unit.walk_along(_pathfinder.calculate_point_path(unit.cell, new_cell))
 #	await unit.walk_finished
 
@@ -168,8 +169,10 @@ func is_player_within_enemy_sight(enemy: Enemy) -> bool:
 
 # randomly chose a marker that is on a different cell than the current enemy and within range, then move enemy
 func move_enemy_to_next_marker(enemy: Enemy) -> void:
-	var filtered_marker_array = _enemy_patrol_key_cells.keys().filter(func(cell: Vector2): return cell != enemy.cell and cell.distance_to(enemy.cell) <= enemy.move_range)
-	self._move_unit(enemy, filtered_marker_array[randi() % filtered_marker_array.size()])
+	var walkable_cells := get_walkable_cells(enemy)
+	var filtered_marker_array := _enemy_patrol_key_cells.keys().filter(func(cell: Vector2): return cell != enemy.cell and cell in walkable_cells)
+	var random_marker_cell = filtered_marker_array[randi() % filtered_marker_array.size()]
+	self._move_unit(enemy, random_marker_cell)
 
 func move_enemy(enemy: Enemy) -> void:
 	match enemy.current_state:
@@ -199,3 +202,46 @@ func _on_enemy_cell_changed(prev_cell: Vector2, new_cell: Vector2, unit: Enemy) 
 
 func _on_enemy_movement_triggered(enemy: Enemy) -> void:
 	move_enemy(enemy)
+
+func _on_enemy_state_changed(enemy: Enemy, prev_state: Enemy.game_state, state: Enemy.game_state) -> void:
+	match prev_state:
+		Enemy.game_state.PATROLLING:
+			match state:
+				Enemy.game_state.CHASING:
+					player.active_chasers.append(enemy)
+				Enemy.game_state.SUSPICIOUS:
+					player.suspicious_chasers.append(enemy)
+				_:
+					pass
+		Enemy.game_state.SUSPICIOUS:
+			player.suspicious_chasers.erase(enemy)
+			match state:
+				Enemy.game_state.CHASING:
+					player.active_chasers.append(enemy)
+				_:
+					pass
+		Enemy.game_state.CHASING:
+			player.active_chasers.erase(enemy)
+			match state:
+				Enemy.game_state.SUSPICIOUS:
+					player.suspicious_chasers.append(enemy)
+				_:
+					pass
+	self.update_theme_song()
+
+func update_theme_song() -> void:
+	# first check which theme to play according to player state
+	if player.active_chasers.size() > 0:
+		if theme != $"Chase Theme":
+			theme.stop()
+			theme = $"Chase Theme"
+			theme.play()
+	elif player.suspicious_chasers.size() > 0:
+		if theme != $"Suspicious Theme":
+			theme.stop()
+			theme = $"Suspicious Theme"
+			theme.play()
+	elif theme != $"Patrol Theme":
+		theme.stop()
+		theme = $"Patrol Theme"
+		theme.play()
