@@ -3,7 +3,9 @@ extends Unit
 
 signal changed_state(enemy: Enemy, state: game_state)
 signal movement_triggered(enemy: Enemy)
-
+var footstep : AudioStreamPlayer2D
+var footR : RandomNumberGenerator
+var theme : AudioStreamPlayer
 #Most interactions define where the enemy is going to move. Instead of coding a
 #lot of interactions here in the enemy script, we just want to make sure the
 #enemy can give necessary information to tell the gameboard where to put things.
@@ -15,8 +17,13 @@ enum game_state {PATROLLING, SUSPICIOUS, CHASING}
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	super()
+	footR = RandomNumberGenerator.new()
+	self.get_child(get_child_count() - 1).start()
 	self.move_range = 10
 	self.add_to_group("enemies")
+	self.current_state = game_state.PATROLLING
+	theme = $"Patrol Theme"
+	theme.play()
 	self.trigger_movement_timer.set_one_shot(true)
 	var player = get_tree().get_first_node_in_group("player")
 	if player as Player:
@@ -31,13 +38,26 @@ func _process(delta):
 	super(delta)
 	
 func update_game_state(state : game_state) -> void:
-	current_state = state
-	# add a delay before continuing the patrol when changing state
-	if state == game_state.PATROLLING:
-		trigger_movement_timer.start()
+	if current_state != state:
+		current_state = state
+		# add a delay before continuing the patrol when changing state
+		if state == game_state.PATROLLING:
+			trigger_movement_timer.start()
 	else:
 		trigger_movement_timer.stop()
-	changed_state.emit(self, state)
+		
+		theme.stop()
+		match current_state:
+			game_state.PATROLLING:
+					theme = $"Patrol Theme"
+					theme.play()
+			game_state.CHASING:
+					theme = $"Chase Theme"
+					theme.play()
+			game_state.SUSPICIOUS:
+					theme = $"Suspicious Theme"
+					theme.play()
+		changed_state.emit(self, state)
 
 #The variable name start_state fits a lot of cases, but can be confusing to
 #reference directly, so this function makes for a more readable alternative.
@@ -134,6 +154,12 @@ func _on_player_cell_changed(_prev_cell: Vector2, _new_cell: Vector2, unit: Unit
 				if player as Player and self.is_player_in_sight(player) and not player.is_hidden():
 					self.chase_player(player)
 
+func _on_footstep_timer_timeout():
+	footstep = get_node("FootStep " + str(footR.randi_range(0, 6)))
+	#footstep = get_node("FootStep 0")
+	#print(footstep.get_path())
+	footstep.play()
+  
 # check if player is in range and in sight to start following them
 func _on_cell_changed(_prev_cell, _new_cell, _unit) -> void:
 	match current_state:

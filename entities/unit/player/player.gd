@@ -7,10 +7,17 @@ var boardPiece : Interactable
 @onready var chasers: Array[Enemy] = []
 @onready var detection_shape : DetectionShape = $PathFollow2D/PlayerDetectionShape
 
+var feet : AudioStreamPlayer
+
+var ears : AudioListener2D
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	super()
+	get_node("FootstepTimer").start()
 	self.add_to_group("player")
+	ears = AudioListener2D.new()
+	ears.make_current()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -52,3 +59,8 @@ func unhide_self() -> void:
 # getter function to avoid using the variable directly
 func is_hidden():
 	return self._is_hidden
+
+
+
+func _on_footstep_timer_timeout():
+	pass # Replace with function body.

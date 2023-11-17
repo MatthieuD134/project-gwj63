@@ -5,13 +5,13 @@ class_name Interactable
 #a template here for our three types to follow.
 
 @export var owners : PackedVector2Array
-
+@export var sound_effect : AudioStreamPlayer
 # Called when the node enters the scene tree for the first time.
 @export_group("Consumable")
 @export var fixable : bool = false
 @export var usable : bool = false
 @export_group("Fixture")
-@export var Status_tags : PackedStringArray
+@export var status_tags : PackedStringArray
 @export_group("Permeable")
 @export var break_time : float = 0.0
 @export var resettable : bool = false
@@ -48,6 +48,7 @@ func _on_cell_changed(old_cell : Vector2, cell : Vector2, actor : Unit):
 		
 #This function is a stub here, and must be defined by each child.
 func interact():
+	sound_effect.play()
 	if (break_time > 0):
 		print("This Interactable is a Permeable that requires some work to use")
 		set_process(true)
