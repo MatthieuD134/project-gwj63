@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://hvou26uvxf6c"
+path="res://.godot/imported/GWJ#63 SD_Cat Mewo_2.ogg-411348612a338baf524952153d59e6a6.oggvorbisstr"
+
+[deps]
+
+source_file="res://Audio/GWJ#63 SD_Cat Mewo_2.ogg"
+dest_files=["res://.godot/imported/GWJ#63 SD_Cat Mewo_2.ogg-411348612a338baf524952153d59e6a6.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
