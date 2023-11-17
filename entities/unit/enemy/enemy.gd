@@ -27,7 +27,6 @@ func _ready():
 		player.connect("walk_finished", _on_player_walk_finished )
 	# start timer to trigger movement as well as setting game state
 	self.current_state = game_state.PATROLLING
-	self.trigger_movement_timer.start()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -64,10 +63,10 @@ func is_player_in_sight(player:  Player) -> bool:
 	# enables the collision mask layer 1 and 3
 	var cell_size = self.grid.cell_size.x
 	var queries: Array[PhysicsRayQueryParameters2D] = [
-		PhysicsRayQueryParameters2D.create(self.sprite.global_position, player.global_position + Vector2(0, -cell_size), int(pow(2, 1-1) + pow(2, 3-1)), [self]), # top
-		PhysicsRayQueryParameters2D.create(self.sprite.global_position, player.global_position + Vector2(cell_size, 0), int(pow(2, 1-1) + pow(2, 3-1)), [self]), # right
-		PhysicsRayQueryParameters2D.create(self.sprite.global_position, player.global_position + Vector2(0, cell_size), int(pow(2, 1-1) + pow(2, 3-1)), [self]), # bottom
-		PhysicsRayQueryParameters2D.create(self.sprite.global_position, player.global_position + Vector2(-cell_size, 0), int(pow(2, 1-1) + pow(2, 3-1)), [self]) # left
+		PhysicsRayQueryParameters2D.create(self.sprite.global_position, player.global_position + Vector2(0, -cell_size/3), int(pow(2, 1-1) + pow(2, 3-1)), [self]), # top
+		PhysicsRayQueryParameters2D.create(self.sprite.global_position, player.global_position + Vector2(cell_size/3, 0), int(pow(2, 1-1) + pow(2, 3-1)), [self]), # right
+		PhysicsRayQueryParameters2D.create(self.sprite.global_position, player.global_position + Vector2(0, cell_size/3), int(pow(2, 1-1) + pow(2, 3-1)), [self]), # bottom
+		PhysicsRayQueryParameters2D.create(self.sprite.global_position, player.global_position + Vector2(-cell_size/3, 0), int(pow(2, 1-1) + pow(2, 3-1)), [self]) # left
 	]
 	for query in queries:
 		query.set_collide_with_areas(true)
@@ -79,7 +78,7 @@ func is_player_in_sight(player:  Player) -> bool:
 	return false
 
 # function to trigger enemy to chase player
-func chase_player(player: Player) -> void:
+func chase_player(_player: Player) -> void:
 	self.update_game_state(game_state.CHASING)
 	movement_triggered.emit(self)
 

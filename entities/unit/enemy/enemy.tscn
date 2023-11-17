@@ -29,7 +29,7 @@ texture = ExtResource("2_748sl")
 collision_layer = 2
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PathFollow2D/DetectionArea"]
-polygon = PackedVector2Array(0, 0, 2.08165e-12, 1536, 267, 1513, 525, 1443, 768, 1330, 987, 1177, 1177, 987, 1330, 768, 1443, 525, 1513, 267, 1536, 2.08165e-12, 1513, -267, 1443, -525, 1330, -768, 1177, -987, 987, -1177, 768, -1330, 525, -1443, 267, -1513, 2.08165e-12, -1536)
+polygon = PackedVector2Array(0, 0, 525, 1443, 768, 1330, 987, 1177, 1177, 987, 1330, 768, 1443, 525, 1513, 267, 1536, 2.08165e-12, 1513, -267, 1443, -525, 1330, -768, 1177, -987, 987, -1177, 768, -1330, 525, -1443)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
