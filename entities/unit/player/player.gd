@@ -9,11 +9,6 @@ var boardPiece : Interactable
 @onready var detection_shape : DetectionShape = $PathFollow2D/PlayerDetectionShape
 
 var feet : AudioStreamPlayer
-
-var ears : AudioListener2D
-
-var feet : AudioStreamPlayer
-
 var ears : AudioListener2D
 
 # Called when the node enters the scene tree for the first time.

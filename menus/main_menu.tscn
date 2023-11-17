@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://c11ukiuclxo6b"]
+[gd_scene load_steps=3 format=3 uid="uid://c11ukiuclxo6b"]
 
 [ext_resource type="Script" path="res://menus/main_menu.gd" id="1_dxvbe"]
 [ext_resource type="PackedScene" uid="uid://d0wq5sfxok8kj" path="res://menus/options_menu.tscn" id="2_r4jcl"]
-[ext_resource type="AudioStream" uid="uid://cypppdltspytd" path="res://menus/Assets/GWJ63_Music_Menu_1.ogg" id="3_mgmy3"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -65,7 +64,6 @@ visible = false
 layout_mode = 1
 
 [node name="MenuMusic" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_mgmy3")
 autoplay = true
 
 [connection signal="pressed" from="MainMenuContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]

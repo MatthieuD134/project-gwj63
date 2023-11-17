@@ -11,7 +11,7 @@ class_name Unit
 # 		SIGNALS
 # --------------------
 
-signal walk_finished(unit: Unit)
+signal walk_finished(unit: Unit, is_interuption: bool)
 signal cell_changed(prev_cell: Vector2, new_cell: Vector2, unit: Unit)
 
 
@@ -108,7 +108,7 @@ func _process(delta: float) -> void:
 		curve.clear_points()
 		_path_follow.rotation = temp_rotation
 		# Finally, we emit a signal. We'll use this one with the game board.
-		emit_signal("walk_finished", self)
+		emit_signal("walk_finished", self, not self.can_move)
 
 
 # Starts walking along the `path`.

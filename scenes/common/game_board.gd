@@ -171,8 +171,13 @@ func is_player_within_enemy_sight(enemy: Enemy) -> bool:
 func move_enemy_to_next_marker(enemy: Enemy) -> void:
 	var walkable_cells := get_walkable_cells(enemy)
 	var filtered_marker_array := _enemy_patrol_key_cells.keys().filter(func(cell: Vector2): return cell != enemy.cell and cell in walkable_cells)
-	var random_marker_cell = filtered_marker_array[randi() % filtered_marker_array.size()]
-	self._move_unit(enemy, random_marker_cell)
+	if filtered_marker_array.size() > 0: 
+		var random_marker_cell = filtered_marker_array[randi() % filtered_marker_array.size()]
+		self._move_unit(enemy, random_marker_cell)
+	else:
+		var random_cell = walkable_cells[randi() % walkable_cells.size()]
+		self._move_unit(enemy, random_cell)
+		
 
 func move_enemy(enemy: Enemy) -> void:
 	match enemy.current_state:
@@ -181,6 +186,10 @@ func move_enemy(enemy: Enemy) -> void:
 		
 		Enemy.game_state.CHASING:
 			_move_unit(enemy, player.cell)
+		
+		Enemy.game_state.SUSPICIOUS:
+			if enemy.suspicious_target_cell in get_walkable_cells(enemy):
+				_move_unit(enemy, enemy.suspicious_target_cell)
 	
 
 # --------------------------------
