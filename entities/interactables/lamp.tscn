@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cssxleiw3fu6"]
+
+[ext_resource type="PackedScene" uid="uid://b4g4pdy5sh8np" path="res://entities/interactables/interactable.tscn" id="1_xuf0o"]
+[ext_resource type="AudioStream" uid="uid://c3jbfdp2syuxq" path="res://Audio/GWJ#63 SD_Lamp falling_3.ogg" id="2_e05mv"]
+
+[node name="Lamp" instance=ExtResource("1_xuf0o")]
+animation_frames = 12
+animation_title = "LampTopple"
+
+[node name="InteractableSound" parent="." index="0"]
+stream = ExtResource("2_e05mv")
+
+[node name="Sprite2D" parent="." index="2"]
+frame = 0

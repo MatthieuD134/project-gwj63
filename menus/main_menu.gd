@@ -2,6 +2,7 @@ extends Control
 
 @onready var main_menu = $MainMenuContainer
 @onready var options_menu = $OptionsMenu
+@onready var menu_music : AudioStreamPlayer = $MenuMusic
 
 func _ready():
 	initialize_focus()
@@ -37,3 +38,7 @@ func show_and_hide(first: Control, second: Control) -> void:
 
 func initialize_focus() -> void:
 	$MainMenuContainer/VBoxContainer/StartButton.grab_focus()
+
+
+func _on_menu_music_finished():
+	menu_music.play()

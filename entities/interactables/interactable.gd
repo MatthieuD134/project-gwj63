@@ -5,22 +5,27 @@ class_name Interactable
 #a template here for our three types to follow.
 
 @export var owners : PackedVector2Array
-@export var sound_effect : AudioStreamPlayer
-# Called when the node enters the scene tree for the first time.
+@export_group("Animation")
+@export var animation : AnimationPlayer
+@export var animation_frames : int
+@export var animation_title : String
 @export_group("Consumable")
 @export var fixable : bool = false
 @export var usable : bool = false
 @export_group("Fixture")
 @export var status_tags : PackedStringArray
 @export_group("Permeable")
+@export var enable : bool = false
 @export var break_time : float = 0.0
 @export var resettable : bool = false
 var break_reset
-var occupied : bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	break_reset = break_time
+	assert(animation, "Interactables must have a sprite representing them on the Game Board.")
+	animation.set_frame_and_progress(0, 0)
+	animation.pause()
 	var gameBoard = get_node("res://scenes/common/game_board.gd")
 	gameBoard.connect("cell_changed", _on_cell_changed)
 	set_process(false)
@@ -38,18 +43,15 @@ func _process(delta):
 func _on_cell_changed(old_cell : Vector2, cell : Vector2, actor : Unit):
 	if (owners.has(cell)) :
 		print("You just entered an Interactable")
-		occupied = true
 		interact()
 	else:
-		if (occupied):
+		if (owners.has(old_cell)):
 			print("You just exited an Interactable")
-			occupied = false
 			reset()
 		
-#This function is a stub here, and must be defined by each child.
+#This function is the starting point of our interactable code and how they behave.
 func interact():
-	sound_effect.play()
-	if (break_time > 0):
+	if ((break_time > 0) && (enable)):
 		print("This Interactable is a Permeable that requires some work to use")
 		set_process(true)
 		
@@ -64,4 +66,9 @@ func reset():
 		break_time = break_reset
 		
 func use():
+	animation.play(animation_title)
 	usable = false
+
+func _on_animation_player_animation_finished(anim_name):
+	animation.set_frame_and_progress(animation_frames - 1, 1)
+	animation.pause()
