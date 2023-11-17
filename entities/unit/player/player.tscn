@@ -31,3 +31,8 @@ unit = NodePath("../..")
 shape = SubResource("RectangleShape2D_nshmv")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="FootstepTimer" type="Timer" parent="."]
+wait_time = 0.334
+
+[connection signal="timeout" from="FootstepTimer" to="." method="_on_footstep_timer_timeout"]

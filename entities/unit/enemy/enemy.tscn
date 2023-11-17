@@ -1,13 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://dckc2w61hj6hr"]
+[gd_scene load_steps=11 format=3 uid="uid://dckc2w61hj6hr"]
 
 [ext_resource type="Script" path="res://entities/unit/enemy/enemy.gd" id="1_olkum"]
 [ext_resource type="Texture2D" uid="uid://c0ajs05ie6jto" path="res://entities/unit/enemy/assets/enemy_sprite.svg" id="2_748sl"]
 [ext_resource type="AudioStream" uid="uid://yea4734uwvel" path="res://Audio/GWJ#63 SD_Human FS_13.ogg" id="3_mqeqm"]
-[ext_resource type="AudioStream" uid="uid://dfayg1f4c8ajf" path="res://Audio/Chasing Enemy.ogg" id="3_vmcw4"]
 [ext_resource type="AudioStream" uid="uid://onnmxwx18v5a" path="res://Audio/GWJ#63 SD_Human FS_14.ogg" id="4_22up7"]
-[ext_resource type="AudioStream" uid="uid://bsejdn3jxxv0p" path="res://Audio/Patrolling Enemy.ogg" id="4_lh0r5"]
 [ext_resource type="AudioStream" uid="uid://cxm6sd5qljdj5" path="res://Audio/GWJ#63 SD_Human FS_15.ogg" id="5_5ydd2"]
-[ext_resource type="AudioStream" uid="uid://c1u8vq7gyt3ll" path="res://Audio/Suspicious Enemy.ogg" id="5_dv3fl"]
 [ext_resource type="AudioStream" uid="uid://cef4vvny6kf1f" path="res://Audio/GWJ#63 SD_Human FS_16.ogg" id="6_4xubk"]
 [ext_resource type="AudioStream" uid="uid://cmo7a674l8gkx" path="res://Audio/GWJ#63 SD_Human FS_17.ogg" id="7_xpy0j"]
 [ext_resource type="AudioStream" uid="uid://obduccrjtxob" path="res://Audio/GWJ#63 SD_Human FS_18.ogg" id="8_hqbof"]
@@ -19,8 +16,6 @@
 curve = SubResource("Curve2D_0thfe")
 script = ExtResource("1_olkum")
 trigger_movement_timer = NodePath("TriggerMovement")
-move_range = null
-move_speed = null
 sprite = NodePath("PathFollow2D/Sprite2D")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="."]
@@ -39,15 +34,6 @@ polygon = PackedVector2Array(0, 0, 2.08165e-12, 1536, 267, 1513, 525, 1443, 768,
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 [node name="TriggerMovement" type="Timer" parent="."]
-
-[node name="Chase Theme" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_vmcw4")
-
-[node name="Patrol Theme" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_lh0r5")
-
-[node name="Suspicious Theme" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_dv3fl")
 
 [node name="FootStep 0" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_mqeqm")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://6tcudoatg4hu"]
+[gd_scene load_steps=21 format=3 uid="uid://6tcudoatg4hu"]
 
 [ext_resource type="PackedScene" uid="uid://ce1ekytxsmo8w" path="res://menus/pause_menu.tscn" id="1_8lp6y"]
 [ext_resource type="PackedScene" uid="uid://dqxxgk3o4nu3m" path="res://entities/cursor/cursor.tscn" id="1_biyqh"]
@@ -11,6 +11,9 @@
 [ext_resource type="Script" path="res://scenes/common/camera.gd" id="8_h8snl"]
 [ext_resource type="PackedScene" uid="uid://c2d3ue5lbvhdb" path="res://entities/unit/player/player.tscn" id="9_p1nm4"]
 [ext_resource type="PackedScene" uid="uid://dckc2w61hj6hr" path="res://entities/unit/enemy/enemy.tscn" id="9_sq0c2"]
+[ext_resource type="AudioStream" uid="uid://dfayg1f4c8ajf" path="res://Audio/Chasing Enemy.ogg" id="11_5p6yg"]
+[ext_resource type="AudioStream" uid="uid://bsejdn3jxxv0p" path="res://Audio/Patrolling Enemy.ogg" id="12_ymvjh"]
+[ext_resource type="AudioStream" uid="uid://c1u8vq7gyt3ll" path="res://Audio/Suspicious Enemy.ogg" id="13_pxk7a"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xitvv"]
 texture = ExtResource("3_bkewj")
@@ -151,7 +154,6 @@ z_index = 1
 
 [node name="Enemy" parent="GameBoard/Enemies" instance=ExtResource("9_sq0c2")]
 position = Vector2(1408, 1408)
-current_state = null
 move_speed = 256.0
 
 [node name="Player" parent="GameBoard" instance=ExtResource("9_p1nm4")]
@@ -171,6 +173,15 @@ position = Vector2(1158, 412)
 
 [node name="Marker2D4" type="Marker2D" parent="GameBoard/EnemiesPatrolKeyPoints" groups=["enemy_patrol_key_markers"]]
 position = Vector2(2436, 2954)
+
+[node name="Chase Theme" type="AudioStreamPlayer" parent="GameBoard"]
+stream = ExtResource("11_5p6yg")
+
+[node name="Patrol Theme" type="AudioStreamPlayer" parent="GameBoard"]
+stream = ExtResource("12_ymvjh")
+
+[node name="Suspicious Theme" type="AudioStreamPlayer" parent="GameBoard"]
+stream = ExtResource("13_pxk7a")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

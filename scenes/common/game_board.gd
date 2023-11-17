@@ -14,6 +14,8 @@ const DIRECTIONS = [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]
 @export var player: Player
 @onready var tilemap: TileMap = $TileMap
 
+var theme : AudioStreamPlayer
+
 var _pathfinder: PathFinder
 
 
@@ -38,7 +40,10 @@ func _ready() -> void:
 		if enemy as Enemy:
 			enemy.connect("cell_changed", _on_enemy_cell_changed )
 			enemy.connect("movement_triggered", _on_enemy_movement_triggered )
+			enemy.connect("changed_state", _on_enemy_state_changed )
 			move_enemy_to_next_marker(enemy)
+	theme = $"Patrol Theme"
+	theme.play()
 
 
 # Returns `true` if the cell is occupied by a unit.
@@ -199,3 +204,46 @@ func _on_enemy_cell_changed(prev_cell: Vector2, new_cell: Vector2, unit: Enemy) 
 
 func _on_enemy_movement_triggered(enemy: Enemy) -> void:
 	move_enemy(enemy)
+
+func _on_enemy_state_changed(enemy: Enemy, prev_state: Enemy.game_state, state: Enemy.game_state) -> void:
+	match prev_state:
+		Enemy.game_state.PATROLLING:
+			match state:
+				Enemy.game_state.CHASING:
+					player.active_chasers.append(enemy)
+				Enemy.game_state.SUSPICIOUS:
+					player.suspicious_chasers.append(enemy)
+				_:
+					pass
+		Enemy.game_state.SUSPICIOUS:
+			player.suspicious_chasers.erase(enemy)
+			match state:
+				Enemy.game_state.CHASING:
+					player.active_chasers.append(enemy)
+				_:
+					pass
+		Enemy.game_state.CHASING:
+			player.active_chasers.erase(enemy)
+			match state:
+				Enemy.game_state.SUSPICIOUS:
+					player.suspicious_chasers.append(enemy)
+				_:
+					pass
+	self.update_theme_song()
+
+func update_theme_song() -> void:
+	# first check which theme to play according to player state
+	if player.active_chasers.size() > 0:
+		if theme != $"Chase Theme":
+			theme.stop()
+			theme = $"Chase Theme"
+			theme.play()
+	elif player.suspicious_chasers.size() > 0:
+		if theme != $"Suspicious Theme":
+			theme.stop()
+			theme = $"Suspicious Theme"
+			theme.play()
+	elif theme != $"Patrol Theme":
+		theme.stop()
+		theme = $"Patrol Theme"
+		theme.play()
