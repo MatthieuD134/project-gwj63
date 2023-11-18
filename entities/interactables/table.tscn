@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cujmlhqv2wjcw" path="res://entities/interactables/Assets/table_sprite.png" id="2_jp0w6"]
 
 [node name="Table" groups=["permeables"] instance=ExtResource("1_8be3q")]
+z_index = 10
 scale = Vector2(1, 1)
 owners_positions = PackedVector2Array(-256, -128, 2.08165e-12, -128, 256, -128, -256, 128, 2.08165e-12, 128, 256, 128)
 status_tags = PackedStringArray("HIDDEN")
