@@ -6,6 +6,7 @@
 [node name="Table" instance=ExtResource("1_8be3q")]
 z_index = 10
 scale = Vector2(1, 1)
+infamy = 0
 owners_positions = PackedVector2Array(-256, -128, 2.08165e-12, -128, 256, -128, -256, 128, 2.08165e-12, 128, 256, 128)
 status_tags = PackedStringArray("HIDDEN")
 enable = true
