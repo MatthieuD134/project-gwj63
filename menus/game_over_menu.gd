@@ -17,7 +17,6 @@ func _on_quit_button_pressed():
 func initialize_focus() -> void:
 	$PauseMenuContainer/VBoxContainer2/VBoxContainer/MainMenuButton.grab_focus()
 
-func game_over(infamy, max) -> void:
 	if (infamy == max):
 		badCat = "FINE! YOU WIN!"
 	else:
