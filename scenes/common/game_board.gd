@@ -19,6 +19,7 @@ var theme : AudioStreamPlayer
 var _pathfinder: PathFinder
 
 @onready var infamy : int = 0
+@onready var infamy_max : float = 0.0
 
 
 
@@ -49,6 +50,7 @@ func _ready() -> void:
 	for interactable in interactables:
 		#print (permeable.infamy)
 		if interactable as Interactable:
+			infamy_max += interactable.infamy
 			interactable.connect("infamy_transmit", _on_infamy_transmit)
 			if interactable.enable:
 				for owner in interactable.owners:
@@ -242,7 +244,7 @@ func _on_player_cell_changed(prev_cell, new_cell, unit):
 	for enemy in enemy_nodes:
 		if enemy as Enemy:
 			if is_player_within_enemy_range(enemy):
-				$CanvasLayer/GameOverMenu.game_over(infamy)
+				$CanvasLayer/GameOverMenu.game_over(infamy, infamy_max)
 
 # called whenever an enemy changes cell
 func _on_enemy_cell_changed(prev_cell: Vector2, new_cell: Vector2, unit: Enemy) -> void:
@@ -251,7 +253,7 @@ func _on_enemy_cell_changed(prev_cell: Vector2, new_cell: Vector2, unit: Enemy) 
 	# test for game over
 	if unit as Enemy:
 		if is_player_within_enemy_range(unit):
-			$CanvasLayer/GameOverMenu.game_over(infamy)
+			$CanvasLayer/GameOverMenu.game_over(infamy, infamy_max)
 
 func _on_enemy_movement_triggered(enemy: Enemy) -> void:
 	move_enemy(enemy)
