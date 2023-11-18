@@ -17,12 +17,13 @@ func _on_quit_button_pressed():
 func initialize_focus() -> void:
 	$PauseMenuContainer/VBoxContainer2/VBoxContainer/MainMenuButton.grab_focus()
 
-func game_over(infamy) -> void:
-	#print(infamy)
-	if (infamy > 2):
-		badCat = "No! Bad Cat!"
-	if (infamy > 4):
-		badCat = "I GOT YOU NOW! \nYOU ARE A VERY BAD CAT"
+	if (infamy == max):
+		badCat = "FINE! YOU WIN!"
+	else:
+		if ((infamy/max) > 0.10):
+			badCat = "No! Bad Cat!"
+		if ((infamy/max) > 0.50):
+			badCat = "I GOT YOU NOW! \nYOU ARE A VERY BAD CAT!"
 	get_node("PauseMenuContainer/VBoxContainer2/Label").text = badCat
 	self.show()
 	get_tree().set_pause(true)

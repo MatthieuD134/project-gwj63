@@ -6,6 +6,7 @@
 z_index = 10
 [node name="Table" groups=["interactables"] instance=ExtResource("1_8be3q")]
 scale = Vector2(1, 1)
+infamy = 0
 owners_positions = PackedVector2Array(-256, -128, 2.08165e-12, -128, 256, -128, -256, 128, 2.08165e-12, 128, 256, 128)
 status_tags = PackedStringArray("HIDDEN")
 enable = true
