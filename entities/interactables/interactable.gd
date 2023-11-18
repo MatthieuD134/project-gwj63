@@ -5,6 +5,7 @@ class_name Interactable
 #a template here for our three types to follow.
 
 @export var owners : PackedVector2Array
+@export var emitting_cell: Vector2
 @export_group("Animation")
 @export var animation : AnimationPlayer
 @export var animation_frames : int
@@ -77,6 +78,13 @@ func reset():
 func use():
 	animation.play(animation_title)
 	usable = false
+
+func get_enemies_attention() -> void:
+	var enemies = get_tree().get_nodes_in_group("enemies")
+	for enemy in enemies:
+		if enemy as Enemy:
+			if enemy.current_state != Enemy.game_state.CHASING and (emitting_cell - enemy.cell).abs().x + (emitting_cell - enemy.cell).abs().y <= enemy.hearing_range:
+				enemy.check_suspicious_cell(emitting_cell)
 
 func _on_animation_player_animation_finished(anim_name):
 	animation.stop(true)

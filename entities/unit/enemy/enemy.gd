@@ -10,6 +10,7 @@ var footR : RandomNumberGenerator
 #enemy can give necessary information to tell the gameboard where to put things.
 enum game_state {PATROLLING, SUSPICIOUS, CHASING}
 
+@export var hearing_range: int = 256*20
 @export var current_state := game_state.PATROLLING : set = update_game_state
 @export var trigger_movement_timer: Timer
 @onready var animation : AnimationPlayer = $AnimationPlayer

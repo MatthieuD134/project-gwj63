@@ -126,6 +126,7 @@ player = NodePath("Player")
 [node name="Lamp" parent="GameBoard" instance=ExtResource("2_4k1k6")]
 position = Vector2(1024, 384)
 owners = PackedVector2Array(3, 1)
+emitting_cell = Vector2(3, 1)
 
 [node name="Table" parent="GameBoard" instance=ExtResource("3_sjs5u")]
 position = Vector2(768, 2944)
@@ -135,6 +136,7 @@ owners = PackedVector2Array(2, 10, 3, 10, 2, 11, 3, 11, 2, 12, 3, 12)
 [node name="Vase" parent="GameBoard" instance=ExtResource("3_ajq8e")]
 position = Vector2(1152, 384)
 owners = PackedVector2Array(4, 1)
+emitting_cell = Vector2(4, 1)
 
 [node name="Camera2D" type="Camera2D" parent="GameBoard" node_paths=PackedStringArray("player")]
 z_index = 100
