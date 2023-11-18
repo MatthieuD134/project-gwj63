@@ -4,6 +4,7 @@ class_name Interactable
 #This is the parent class for our three secondary tile details. We will create
 #a template here for our three types to follow.
 
+@export var infamy : int = 1
 @export var owners_positions : PackedVector2Array
 @export var emitting_position: Vector2
 @export_group("Animation")
@@ -22,6 +23,7 @@ class_name Interactable
 var break_reset
 var owners: PackedVector2Array
 var emitting_cell: Vector2
+signal infamy_transmit(infamy)
 
 @export var grid: Resource = preload("res://ressources/grid_board.tres")
 
@@ -85,6 +87,8 @@ func reset():
 		break_time = break_reset
 		
 func use():
+	#print(infamy)
+	infamy_transmit.emit(infamy)
 	animation.play(animation_title)
 	usable = false
 
