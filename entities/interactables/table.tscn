@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://51mcls862hiy"]
+
+[ext_resource type="PackedScene" uid="uid://b4g4pdy5sh8np" path="res://entities/interactables/interactable.tscn" id="1_8be3q"]
+[ext_resource type="Texture2D" uid="uid://cujmlhqv2wjcw" path="res://entities/interactables/Assets/table_sprite.png" id="2_jp0w6"]
+
+[node name="Interactable" instance=ExtResource("1_8be3q")]
+status_tags = PackedStringArray("HIDDEN")
+enable = true
+
+[node name="InteractableSound" parent="." index="0"]
+stream = null
+
+[node name="Sprite2D" parent="." index="2"]
+position = Vector2(0, -9)
+scale = Vector2(1, 0.953125)
+texture = ExtResource("2_jp0w6")
+hframes = 1
+vframes = 1
+frame = 0

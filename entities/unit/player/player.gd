@@ -35,12 +35,10 @@ func interact(activePiece):
 		self.unhide_self()
 		return
 	
-	if (boardPiece.Status_tags.has("HIDDEN")):
+	if (boardPiece.status_tags.has("HIDDEN")):
 		self.hide_self()
 	else:
 		self.unhide_self()
-		
-	boardPiece.interact()
 
 # the player is being chased only when it has active chasers in the array
 func is_being_chased() -> bool:
@@ -49,11 +47,13 @@ func is_being_chased() -> bool:
 # function to be used to hide player, only hides if not being chased
 func hide_self() -> void:
 	if not self._is_hidden and not is_being_chased():
+		#print("You are now hidden")
 		self._is_hidden = true
 
 # function to be used to unhide player
 func unhide_self() -> void:
 	if self._is_hidden:
+		#print("You are no longer hidden")
 		self._is_hidden = false
 
 # getter function to avoid using the variable directly

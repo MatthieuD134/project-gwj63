@@ -22,12 +22,18 @@ var break_reset
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	break_reset = break_time
 	assert(animation, "Interactables must have a sprite representing them on the Game Board.")
-	animation.set_frame_and_progress(0, 0)
-	animation.pause()
-	var gameBoard = get_node("res://scenes/common/game_board.gd")
-	gameBoard.connect("cell_changed", _on_cell_changed)
+	
+	var player = get_tree().get_first_node_in_group("player")
+	if player as Player:
+		player.connect("cell_changed", _on_player_cell_changed )
+	#print(owners)
+	if (enable):
+		report_owners()
+	break_reset = break_time
+	animation.stop(false)
+	#var gameBoard = get_node("GameBoard")
+	#gameBoard.connect("cell_changed", _on_cell_changed)
 	set_process(false)
 
 
@@ -40,13 +46,16 @@ func _process(delta):
 	
 #We are expecting the signal to reach all of our interactables, meaning
 #we have to check to see if we have the correct one.
-func _on_cell_changed(old_cell : Vector2, cell : Vector2, actor : Unit):
-	if (owners.has(cell)) :
-		print("You just entered an Interactable")
+func _on_player_cell_changed(old_cell : Vector2, cell : Vector2, actor : Unit):
+	#print("Signal Received")
+	if (owners.has(cell) && !owners.has(old_cell)) :
+		#print("You just entered an Interactable")
 		interact()
+		actor.interact(self)
 	else:
-		if (owners.has(old_cell)):
-			print("You just exited an Interactable")
+		if (owners.has(old_cell) && !owners.has(cell)):
+			#print("You just exited an Interactable")
+			actor.interact(null)
 			reset()
 		
 #This function is the starting point of our interactable code and how they behave.
@@ -56,7 +65,7 @@ func interact():
 		set_process(true)
 		
 	if usable:
-		print("This Interactable is Consumable")
+		#print("This Interactable is Consumable")
 		use()
 		
 func reset():
@@ -70,5 +79,7 @@ func use():
 	usable = false
 
 func _on_animation_player_animation_finished(anim_name):
-	animation.set_frame_and_progress(animation_frames - 1, 1)
-	animation.pause()
+	animation.stop(true)
+	
+func report_owners():
+	return owners

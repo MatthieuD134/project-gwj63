@@ -1,11 +1,14 @@
-[gd_scene load_steps=21 format=3 uid="uid://6tcudoatg4hu"]
+[gd_scene load_steps=24 format=3 uid="uid://6tcudoatg4hu"]
 
 [ext_resource type="PackedScene" uid="uid://ce1ekytxsmo8w" path="res://menus/pause_menu.tscn" id="1_8lp6y"]
 [ext_resource type="PackedScene" uid="uid://dqxxgk3o4nu3m" path="res://entities/cursor/cursor.tscn" id="1_biyqh"]
+[ext_resource type="PackedScene" uid="uid://cssxleiw3fu6" path="res://entities/interactables/lamp.tscn" id="2_4k1k6"]
 [ext_resource type="Script" path="res://scenes/common/game_board.gd" id="2_mfebm"]
-[ext_resource type="Texture2D" uid="uid://cujmlhqv2wjcw" path="res://scenes/common/assets/table_sprite.png" id="3_bkewj"]
+[ext_resource type="PackedScene" uid="uid://cs5jsca0e365j" path="res://entities/interactables/vase.tscn" id="3_ajq8e"]
+[ext_resource type="PackedScene" uid="uid://51mcls862hiy" path="res://entities/interactables/table.tscn" id="3_sjs5u"]
 [ext_resource type="Texture2D" uid="uid://cpk0gt8xxfr20" path="res://scenes/common/assets/floor_tile_shadow.png" id="4_u02gv"]
 [ext_resource type="Texture2D" uid="uid://bulg0hgq0jikw" path="res://scenes/common/assets/floor_tile.png" id="5_5tsgi"]
+[ext_resource type="Texture2D" uid="uid://cujmlhqv2wjcw" path="res://entities/interactables/Assets/table_sprite.png" id="5_o72sn"]
 [ext_resource type="Texture2D" uid="uid://cebjcmqt0irm6" path="res://scenes/common/assets/floor_tile_3.png" id="6_0scxy"]
 [ext_resource type="Texture2D" uid="uid://cyr6dryrqspv5" path="res://scenes/common/assets/floor_tile_4.png" id="7_p4cjq"]
 [ext_resource type="Script" path="res://scenes/common/camera.gd" id="8_h8snl"]
@@ -16,7 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://c1u8vq7gyt3ll" path="res://Audio/Suspicious Enemy.ogg" id="13_pxk7a"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xitvv"]
-texture = ExtResource("3_bkewj")
+texture = ExtResource("5_o72sn")
 texture_region_size = Vector2i(256, 256)
 3:0/0 = 0
 3:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
@@ -119,6 +122,19 @@ y_sort_enabled = true
 y_sort_enabled = true
 script = ExtResource("2_mfebm")
 player = NodePath("Player")
+
+[node name="Lamp" parent="GameBoard" instance=ExtResource("2_4k1k6")]
+position = Vector2(1024, 384)
+owners = PackedVector2Array(3, 1)
+
+[node name="Table" parent="GameBoard" instance=ExtResource("3_sjs5u")]
+position = Vector2(768, 2944)
+rotation = 1.5708
+owners = PackedVector2Array(2, 10, 3, 10, 2, 11, 3, 11, 2, 12, 3, 12)
+
+[node name="Vase" parent="GameBoard" instance=ExtResource("3_ajq8e")]
+position = Vector2(1152, 384)
+owners = PackedVector2Array(4, 1)
 
 [node name="Camera2D" type="Camera2D" parent="GameBoard" node_paths=PackedStringArray("player")]
 z_index = 100

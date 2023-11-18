@@ -11,5 +11,6 @@ animation_title = "VaseCrush"
 stream = ExtResource("2_l3wn7")
 
 [node name="Sprite2D" parent="." index="2"]
+scale = Vector2(0.5, 0.5)
 hframes = 24
-frame = 29
+frame = 24
