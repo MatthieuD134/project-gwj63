@@ -1,0 +1,74 @@
+[gd_scene load_steps=4 format=3 uid="uid://d1pul4l3dxtvt"]
+
+[ext_resource type="Theme" uid="uid://clppkqi01qnwg" path="res://menus/new_theme.tres" id="1_kd8dc"]
+[ext_resource type="Script" path="res://menus/game_over_menu.gd" id="2_gbktr"]
+[ext_resource type="PackedScene" uid="uid://d0wq5sfxok8kj" path="res://menus/options_menu.tscn" id="2_yei38"]
+
+[node name="GameOverMenu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_kd8dc")
+script = ExtResource("2_gbktr")
+
+[node name="PauseMenuContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -193.0
+offset_top = -104.5
+offset_right = 193.0
+offset_bottom = 104.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PauseMenuContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="Label" type="Label" parent="PauseMenuContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_colors/font_outline_color = Color(0.0980392, 0.0980392, 0.0980392, 1)
+theme_override_constants/outline_size = 25
+theme_override_font_sizes/font_size = 120
+text = "Game Over"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenuContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="MainMenuButton" type="Button" parent="PauseMenuContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../QuitButton")
+focus_neighbor_bottom = NodePath("../QuitButton")
+focus_next = NodePath("../QuitButton")
+focus_previous = NodePath("../QuitButton")
+text = "Main Menu"
+
+[node name="QuitButton" type="Button" parent="PauseMenuContainer/VBoxContainer2/VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../MainMenuButton")
+focus_neighbor_bottom = NodePath("../MainMenuButton")
+focus_next = NodePath("../MainMenuButton")
+focus_previous = NodePath("../MainMenuButton")
+text = "Quit"
+
+[node name="OptionsMenu" parent="." instance=ExtResource("2_yei38")]
+visible = false
+layout_mode = 1
+
+[connection signal="pressed" from="PauseMenuContainer/VBoxContainer2/VBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="PauseMenuContainer/VBoxContainer2/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="back_button_pressed" from="OptionsMenu" to="." method="_on_options_menu_back_button_pressed"]

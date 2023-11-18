@@ -185,7 +185,7 @@ func _move_unit(unit: Unit, new_cell: Vector2) -> void:
 # player is within range of enemy if positionned on an adjacent tile
 # ie: within a distance of 1 to the enemy's cell
 func is_player_within_enemy_range(enemy: Enemy) -> bool:
-	return player.cell.distance_to(enemy.cell) <= 1
+	return player.cell == enemy.cell
 
 # check if player is within enemy detection
 func is_player_within_enemy_sight(enemy: Enemy) -> bool:
@@ -227,11 +227,21 @@ func _on_cursor_accept_pressed(cell):
 func _on_player_cell_changed(prev_cell, new_cell, unit):
 	_units.erase(prev_cell)
 	_units[new_cell] = unit
+	# test for game over
+	var enemy_nodes = get_tree().get_nodes_in_group("enemies")
+	for enemy in enemy_nodes:
+		if enemy as Enemy:
+			if is_player_within_enemy_range(enemy):
+				$CanvasLayer/GameOverMenu.game_over()
 
 # called whenever an enemy changes cell
 func _on_enemy_cell_changed(prev_cell: Vector2, new_cell: Vector2, unit: Enemy) -> void:
 	_units.erase(prev_cell)
 	_units[new_cell] = unit
+	# test for game over
+	if unit as Enemy:
+		if is_player_within_enemy_range(unit):
+			$CanvasLayer/GameOverMenu.game_over()
 
 func _on_enemy_movement_triggered(enemy: Enemy) -> void:
 	move_enemy(enemy)

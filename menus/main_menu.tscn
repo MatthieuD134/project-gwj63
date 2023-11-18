@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://c11ukiuclxo6b"]
+[gd_scene load_steps=5 format=3 uid="uid://c11ukiuclxo6b"]
 
 [ext_resource type="Script" path="res://menus/main_menu.gd" id="1_dxvbe"]
+[ext_resource type="Theme" uid="uid://clppkqi01qnwg" path="res://menus/new_theme.tres" id="1_o288g"]
 [ext_resource type="PackedScene" uid="uid://d0wq5sfxok8kj" path="res://menus/options_menu.tscn" id="2_r4jcl"]
 [ext_resource type="AudioStream" uid="uid://cypppdltspytd" path="res://menus/Assets/GWJ63_Music_Menu_1.ogg" id="3_hsena"]
 
@@ -11,6 +12,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_o288g")
 script = ExtResource("1_dxvbe")
 
 [node name="MainMenuContainer" type="MarginContainer" parent="."]
@@ -20,13 +22,12 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -184.0
-offset_top = -221.0
-offset_right = -1.0
-offset_bottom = -2.0
+offset_left = -125.0
+offset_top = -109.5
+offset_right = 125.0
+offset_bottom = 109.5
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(2, 2)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainMenuContainer"]
 layout_mode = 2

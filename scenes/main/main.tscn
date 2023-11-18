@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://6tcudoatg4hu"]
+[gd_scene load_steps=25 format=3 uid="uid://6tcudoatg4hu"]
 
 [ext_resource type="PackedScene" uid="uid://ce1ekytxsmo8w" path="res://menus/pause_menu.tscn" id="1_8lp6y"]
 [ext_resource type="PackedScene" uid="uid://dqxxgk3o4nu3m" path="res://entities/cursor/cursor.tscn" id="1_biyqh"]
@@ -17,6 +17,7 @@
 [ext_resource type="AudioStream" uid="uid://dfayg1f4c8ajf" path="res://Audio/Chasing Enemy.ogg" id="11_5p6yg"]
 [ext_resource type="AudioStream" uid="uid://bsejdn3jxxv0p" path="res://Audio/Patrolling Enemy.ogg" id="12_ymvjh"]
 [ext_resource type="AudioStream" uid="uid://c1u8vq7gyt3ll" path="res://Audio/Suspicious Enemy.ogg" id="13_pxk7a"]
+[ext_resource type="PackedScene" uid="uid://d1pul4l3dxtvt" path="res://menus/game_over_menu.tscn" id="17_46fcv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xitvv"]
 texture = ExtResource("5_o72sn")
@@ -220,9 +221,11 @@ stream = ExtResource("12_ymvjh")
 [node name="Suspicious Theme" type="AudioStreamPlayer" parent="GameBoard"]
 stream = ExtResource("13_pxk7a")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="GameBoard"]
 
-[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("1_8lp6y")]
+[node name="GameOverMenu" parent="GameBoard/CanvasLayer" instance=ExtResource("17_46fcv")]
+
+[node name="PauseMenu" parent="GameBoard/CanvasLayer" instance=ExtResource("1_8lp6y")]
 
 [connection signal="accept_pressed" from="GameBoard/Cursor" to="GameBoard" method="_on_cursor_accept_pressed"]
 [connection signal="cell_changed" from="GameBoard/Player" to="GameBoard" method="_on_player_cell_changed"]

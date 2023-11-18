@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://clppkqi01qnwg"]
+
+[ext_resource type="FontFile" uid="uid://bn557rkx8ixq3" path="res://fonts/CARTOON.TTF" id="1_0vomb"]
+
+[resource]
+default_font = ExtResource("1_0vomb")
+default_font_size = 48
