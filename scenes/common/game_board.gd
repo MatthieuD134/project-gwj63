@@ -304,3 +304,5 @@ func update_theme_song() -> void:
 func _on_infamy_transmit(x):
 	#print(x)
 	infamy += x
+	if (infamy == infamy_max):
+		$CanvasLayer/GameOverMenu.game_over(infamy, infamy_max)
