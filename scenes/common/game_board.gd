@@ -18,6 +18,8 @@ var theme : AudioStreamPlayer
 
 var _pathfinder: PathFinder
 
+@onready var infamy : int = 0
+
 
 
 # We use a dictionary to keep track of the units that are on the board. Each key-value pair in the
@@ -43,12 +45,14 @@ func _ready() -> void:
 			enemy.connect("movement_triggered", _on_enemy_movement_triggered )
 			enemy.connect("changed_state", _on_enemy_state_changed )
 			move_enemy_to_next_marker(enemy)
-	var permeables = get_tree().get_nodes_in_group("permeables")
-	for permeable in permeables:
-		if permeable as Interactable:
-			if permeable.enable:
-				for owner in permeable.owners:
-					_walkable_for_player_only[owner] = permeable
+	var interactables = get_tree().get_nodes_in_group("interactables")
+	for interactable in interactables:
+		#print (permeable.infamy)
+		if interactable as Interactable:
+			interactable.connect("infamy_transmit", _on_infamy_transmit)
+			if interactable.enable:
+				for owner in interactable.owners:
+					_walkable_for_player_only[owner] = interactable
 	theme = $"Patrol Theme"
 	theme.play()
 
@@ -238,7 +242,7 @@ func _on_player_cell_changed(prev_cell, new_cell, unit):
 	for enemy in enemy_nodes:
 		if enemy as Enemy:
 			if is_player_within_enemy_range(enemy):
-				$CanvasLayer/GameOverMenu.game_over()
+				$CanvasLayer/GameOverMenu.game_over(infamy)
 
 # called whenever an enemy changes cell
 func _on_enemy_cell_changed(prev_cell: Vector2, new_cell: Vector2, unit: Enemy) -> void:
@@ -247,7 +251,7 @@ func _on_enemy_cell_changed(prev_cell: Vector2, new_cell: Vector2, unit: Enemy) 
 	# test for game over
 	if unit as Enemy:
 		if is_player_within_enemy_range(unit):
-			$CanvasLayer/GameOverMenu.game_over()
+			$CanvasLayer/GameOverMenu.game_over(infamy)
 
 func _on_enemy_movement_triggered(enemy: Enemy) -> void:
 	move_enemy(enemy)
@@ -294,3 +298,7 @@ func update_theme_song() -> void:
 		theme.stop()
 		theme = $"Patrol Theme"
 		theme.play()
+
+func _on_infamy_transmit(x):
+	#print(x)
+	infamy += x
