@@ -1,9 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://51mcls862hiy"]
+[gd_scene load_steps=3 format=3 uid="uid://l5jy5tmkt1ps"]
 
 [ext_resource type="PackedScene" uid="uid://b4g4pdy5sh8np" path="res://entities/interactables/interactable.tscn" id="1_8be3q"]
 [ext_resource type="Texture2D" uid="uid://cujmlhqv2wjcw" path="res://entities/interactables/Assets/table_sprite.png" id="2_jp0w6"]
 
-[node name="Interactable" instance=ExtResource("1_8be3q")]
+[node name="Table" groups=["permeables"] instance=ExtResource("1_8be3q")]
+scale = Vector2(1, 1)
+owners_positions = PackedVector2Array(-256, -128, 2.08165e-12, -128, 256, -128, -256, 128, 2.08165e-12, 128, 256, 128)
 status_tags = PackedStringArray("HIDDEN")
 enable = true
 
@@ -11,9 +13,8 @@ enable = true
 stream = null
 
 [node name="Sprite2D" parent="." index="2"]
-position = Vector2(0, -9)
-scale = Vector2(1, 0.953125)
+position = Vector2(2.08165e-12, 2.08165e-12)
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_jp0w6")
 hframes = 1
 vframes = 1
-frame = 0

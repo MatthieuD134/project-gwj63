@@ -43,6 +43,12 @@ func _ready() -> void:
 			enemy.connect("movement_triggered", _on_enemy_movement_triggered )
 			enemy.connect("changed_state", _on_enemy_state_changed )
 			move_enemy_to_next_marker(enemy)
+	var permeables = get_tree().get_nodes_in_group("permeables")
+	for permeable in permeables:
+		if permeable as Interactable:
+			if permeable.enable:
+				for owner in permeable.owners:
+					_walkable_for_player_only[owner] = permeable
 	theme = $"Patrol Theme"
 	theme.play()
 

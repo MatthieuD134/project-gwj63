@@ -4,8 +4,8 @@ class_name Interactable
 #This is the parent class for our three secondary tile details. We will create
 #a template here for our three types to follow.
 
-@export var owners : PackedVector2Array
-@export var emitting_cell: Vector2
+@export var owners_positions : PackedVector2Array
+@export var emitting_position: Vector2
 @export_group("Animation")
 @export var animation : AnimationPlayer
 @export var animation_frames : int
@@ -20,6 +20,10 @@ class_name Interactable
 @export var break_time : float = 0.0
 @export var resettable : bool = false
 var break_reset
+var owners: PackedVector2Array
+var emitting_cell: Vector2
+
+@export var grid: Resource = preload("res://ressources/grid_board.tres")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -28,7 +32,11 @@ func _ready():
 	var player = get_tree().get_first_node_in_group("player")
 	if player as Player:
 		player.connect("cell_changed", _on_player_cell_changed )
-	#print(owners)
+	
+	for owner_position in owners_positions:
+		owners.append(grid.calculate_grid_coordinates(owner_position + self.global_position))
+	
+	emitting_cell = grid.calculate_grid_coordinates(emitting_position + self.global_position)
 	if (enable):
 		report_owners()
 	break_reset = break_time
@@ -48,14 +56,11 @@ func _process(delta):
 #We are expecting the signal to reach all of our interactables, meaning
 #we have to check to see if we have the correct one.
 func _on_player_cell_changed(old_cell : Vector2, cell : Vector2, actor : Unit):
-	#print("Signal Received")
 	if (owners.has(cell) && !owners.has(old_cell)) :
-		#print("You just entered an Interactable")
 		interact()
 		actor.interact(self)
 	else:
 		if (owners.has(old_cell) && !owners.has(cell)):
-			#print("You just exited an Interactable")
 			actor.interact(null)
 			reset()
 		
@@ -86,7 +91,7 @@ func get_enemies_attention() -> void:
 			if enemy.current_state != Enemy.game_state.CHASING and (emitting_cell - enemy.cell).abs().x + (emitting_cell - enemy.cell).abs().y <= enemy.hearing_range:
 				enemy.check_suspicious_cell(emitting_cell)
 
-func _on_animation_player_animation_finished(anim_name):
+func _on_animation_player_animation_finished(_anim_name):
 	animation.stop(true)
 	
 func report_owners():
