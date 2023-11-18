@@ -20,6 +20,8 @@ var suspicious_target_cell  := Vector2(0,0)
 const RUNNING_SPEED : int = 256*2
 const WALKING_SPEED : int = 256
 
+var reaction_scene = preload("res://entities/unit/enemy/reaction-label.tscn")
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	super()
@@ -41,6 +43,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	super(delta)
+	$PathFollow2D/Sprite2D/reactions.rotation = - _path_follow.rotation
 
 func update_game_state(state : game_state) -> void:
 	if current_state != state:
@@ -54,9 +57,17 @@ func update_game_state(state : game_state) -> void:
 		
 		if state == game_state.CHASING:
 			self.move_speed = RUNNING_SPEED
+			var reaction_scene_instance = reaction_scene.instantiate()
+			reaction_scene_instance.set("label_text", "!")
+			$PathFollow2D/Sprite2D/reactions.add_child(reaction_scene_instance)
 		else:
 			self.move_speed = WALKING_SPEED
 		
+		
+		if state == game_state.SUSPICIOUS:
+			var reaction_scene_instance = reaction_scene.instantiate()
+			reaction_scene_instance.set("label_text", "?")
+			$PathFollow2D/Sprite2D/reactions.add_child(reaction_scene_instance)
 		changed_state.emit(self, prev_state, state)
 	else:
 		trigger_movement_timer.stop()

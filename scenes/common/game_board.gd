@@ -49,11 +49,8 @@ func _ready() -> void:
 
 # Returns `true` if the cell is occupied by a unit.
 func is_occupied(cell: Vector2, is_player: bool) -> bool:
-	#print(cell)
-	#print(_walkable_for_player_only.has(cell))
 #	if ((is_player and _units.has(cell)) or _obstacles.has(cell)): return true
 	if _obstacles.has(cell): 
-		#print("Regular Obstacle")
 		return true
 	#if (_walkable_for_player_only.has(cell)):
 	if ((not is_player) and (_walkable_for_player_only.has(cell))): 
@@ -67,7 +64,6 @@ func make_permeable_map():
 				for k in nodeCheck.owners:
 					var i = _walkable_for_player_only.size()
 					_walkable_for_player_only[k] = i
-	#print(_walkable_for_player_only)
 	
 # Clears, and refills the `_units` dictionary with game objects that are on the board.
 func _reinitialize() -> void:

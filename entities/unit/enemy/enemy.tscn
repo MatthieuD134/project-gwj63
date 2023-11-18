@@ -101,6 +101,8 @@ texture = ExtResource("2_wnceu")
 hframes = 8
 vframes = 3
 
+[node name="reactions" type="Node2D" parent="PathFollow2D/Sprite2D"]
+
 [node name="DetectionArea" type="Area2D" parent="PathFollow2D"]
 collision_layer = 2
 
