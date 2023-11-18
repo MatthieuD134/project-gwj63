@@ -219,6 +219,7 @@ position = Vector2(1393, 1323)
 
 [node name="Table" parent="GameBoard/Interactables" instance=ExtResource("3_sjs5u")]
 position = Vector2(1671, 2821)
+infamy = 0
 
 [node name="Chase Theme" type="AudioStreamPlayer" parent="GameBoard"]
 stream = ExtResource("11_5p6yg")
