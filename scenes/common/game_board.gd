@@ -43,17 +43,20 @@ func _ready() -> void:
 			enemy.connect("movement_triggered", _on_enemy_movement_triggered )
 			enemy.connect("changed_state", _on_enemy_state_changed )
 			move_enemy_to_next_marker(enemy)
+	var permeables = get_tree().get_nodes_in_group("permeables")
+	for permeable in permeables:
+		if permeable as Interactable:
+			if permeable.enable:
+				for owner in permeable.owners:
+					_walkable_for_player_only[owner] = permeable
 	theme = $"Patrol Theme"
 	theme.play()
 
 
 # Returns `true` if the cell is occupied by a unit.
 func is_occupied(cell: Vector2, is_player: bool) -> bool:
-	#print(cell)
-	#print(_walkable_for_player_only.has(cell))
 #	if ((is_player and _units.has(cell)) or _obstacles.has(cell)): return true
 	if _obstacles.has(cell): 
-		#print("Regular Obstacle")
 		return true
 	#if (_walkable_for_player_only.has(cell)):
 	if ((not is_player) and (_walkable_for_player_only.has(cell))): 
@@ -67,7 +70,6 @@ func make_permeable_map():
 				for k in nodeCheck.owners:
 					var i = _walkable_for_player_only.size()
 					_walkable_for_player_only[k] = i
-	#print(_walkable_for_player_only)
 	
 # Clears, and refills the `_units` dictionary with game objects that are on the board.
 func _reinitialize() -> void:
@@ -100,6 +102,19 @@ func _reinitialize() -> void:
 		# and a reference to the unit for the value. This allows us to access a unit given its grid
 		# coordinates.
 #		_units[unit.cell] = unit
+
+func calculate_grid_distance(from_cell: Vector2, to_cell: Vector2) -> float:
+	var difference = (from_cell - to_cell).abs()
+	return difference.x + difference.y
+
+# function to be called by enemy to get the closest cell he can walk to when chasing or investigating
+func get_closest_walkable_cell_to_target(unit: Unit, target_cell: Vector2) -> Vector2:
+	var walkable_cells = get_walkable_cells(unit)
+	var closest_walkable_cell = unit.cell
+	for cell in walkable_cells:
+		if calculate_grid_distance(cell, target_cell) < calculate_grid_distance(closest_walkable_cell, target_cell):
+			closest_walkable_cell = cell
+	return closest_walkable_cell
 
 # Returns an array of cells a given unit can walk using the flood fill algorithm.
 func get_walkable_cells(unit: Unit) -> Array[Vector2]:
@@ -160,7 +175,7 @@ func _move_unit(unit: Unit, new_cell: Vector2) -> void:
 	_pathfinder = PathFinder.new(grid, walkable_cells)
 	
 	if is_occupied(new_cell, unit == player) or not new_cell in walkable_cells:
-		return
+		new_cell = get_closest_walkable_cell_to_target(unit, new_cell)
 	
 	# When moving a unit, we need to update our `_units` dictionary. We instantly save it in the
 	# target cell even if the unit itself will take time to walk there.
@@ -176,7 +191,7 @@ func _move_unit(unit: Unit, new_cell: Vector2) -> void:
 # player is within range of enemy if positionned on an adjacent tile
 # ie: within a distance of 1 to the enemy's cell
 func is_player_within_enemy_range(enemy: Enemy) -> bool:
-	return player.cell.distance_to(enemy.cell) <= 1
+	return player.cell == enemy.cell
 
 # check if player is within enemy detection
 func is_player_within_enemy_sight(enemy: Enemy) -> bool:
@@ -218,11 +233,21 @@ func _on_cursor_accept_pressed(cell):
 func _on_player_cell_changed(prev_cell, new_cell, unit):
 	_units.erase(prev_cell)
 	_units[new_cell] = unit
+	# test for game over
+	var enemy_nodes = get_tree().get_nodes_in_group("enemies")
+	for enemy in enemy_nodes:
+		if enemy as Enemy:
+			if is_player_within_enemy_range(enemy):
+				$CanvasLayer/GameOverMenu.game_over()
 
 # called whenever an enemy changes cell
 func _on_enemy_cell_changed(prev_cell: Vector2, new_cell: Vector2, unit: Enemy) -> void:
 	_units.erase(prev_cell)
 	_units[new_cell] = unit
+	# test for game over
+	if unit as Enemy:
+		if is_player_within_enemy_range(unit):
+			$CanvasLayer/GameOverMenu.game_over()
 
 func _on_enemy_movement_triggered(enemy: Enemy) -> void:
 	move_enemy(enemy)

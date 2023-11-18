@@ -1,11 +1,11 @@
-[gd_scene load_steps=24 format=3 uid="uid://6tcudoatg4hu"]
+[gd_scene load_steps=25 format=3 uid="uid://6tcudoatg4hu"]
 
 [ext_resource type="PackedScene" uid="uid://ce1ekytxsmo8w" path="res://menus/pause_menu.tscn" id="1_8lp6y"]
 [ext_resource type="PackedScene" uid="uid://dqxxgk3o4nu3m" path="res://entities/cursor/cursor.tscn" id="1_biyqh"]
 [ext_resource type="PackedScene" uid="uid://cssxleiw3fu6" path="res://entities/interactables/lamp.tscn" id="2_4k1k6"]
 [ext_resource type="Script" path="res://scenes/common/game_board.gd" id="2_mfebm"]
 [ext_resource type="PackedScene" uid="uid://cs5jsca0e365j" path="res://entities/interactables/vase.tscn" id="3_ajq8e"]
-[ext_resource type="PackedScene" uid="uid://51mcls862hiy" path="res://entities/interactables/table.tscn" id="3_sjs5u"]
+[ext_resource type="PackedScene" uid="uid://l5jy5tmkt1ps" path="res://entities/interactables/table.tscn" id="3_sjs5u"]
 [ext_resource type="Texture2D" uid="uid://cpk0gt8xxfr20" path="res://scenes/common/assets/floor_tile_shadow.png" id="4_u02gv"]
 [ext_resource type="Texture2D" uid="uid://bulg0hgq0jikw" path="res://scenes/common/assets/floor_tile.png" id="5_5tsgi"]
 [ext_resource type="Texture2D" uid="uid://cujmlhqv2wjcw" path="res://entities/interactables/Assets/table_sprite.png" id="5_o72sn"]
@@ -17,6 +17,7 @@
 [ext_resource type="AudioStream" uid="uid://dfayg1f4c8ajf" path="res://Audio/Chasing Enemy.ogg" id="11_5p6yg"]
 [ext_resource type="AudioStream" uid="uid://bsejdn3jxxv0p" path="res://Audio/Patrolling Enemy.ogg" id="12_ymvjh"]
 [ext_resource type="AudioStream" uid="uid://c1u8vq7gyt3ll" path="res://Audio/Suspicious Enemy.ogg" id="13_pxk7a"]
+[ext_resource type="PackedScene" uid="uid://d1pul4l3dxtvt" path="res://menus/game_over_menu.tscn" id="17_46fcv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xitvv"]
 texture = ExtResource("5_o72sn")
@@ -117,30 +118,20 @@ sources/7 = SubResource("TileSetAtlasSource_ni3fd")
 
 [node name="Main" type="Node2D"]
 y_sort_enabled = true
+metadata/_edit_lock_ = true
 
 [node name="GameBoard" type="Node2D" parent="." node_paths=PackedStringArray("player")]
 y_sort_enabled = true
 script = ExtResource("2_mfebm")
 player = NodePath("Player")
-
-[node name="Lamp" parent="GameBoard" instance=ExtResource("2_4k1k6")]
-position = Vector2(1024, 384)
-owners = PackedVector2Array(3, 1)
-
-[node name="Table" parent="GameBoard" instance=ExtResource("3_sjs5u")]
-position = Vector2(768, 2944)
-rotation = 1.5708
-owners = PackedVector2Array(2, 10, 3, 10, 2, 11, 3, 11, 2, 12, 3, 12)
-
-[node name="Vase" parent="GameBoard" instance=ExtResource("3_ajq8e")]
-position = Vector2(1152, 384)
-owners = PackedVector2Array(4, 1)
+metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="GameBoard" node_paths=PackedStringArray("player")]
 z_index = 100
 position = Vector2(556, 323)
 script = ExtResource("8_h8snl")
 player = NodePath("../Player")
+metadata/_edit_lock_ = true
 
 [node name="TileMap" type="TileMap" parent="GameBoard"]
 y_sort_enabled = true
@@ -162,11 +153,14 @@ layer_2/y_sort_enabled = false
 layer_2/y_sort_origin = 8
 layer_2/z_index = 1
 layer_2/tile_data = PackedInt32Array()
+metadata/_edit_lock_ = true
 
 [node name="Cursor" parent="GameBoard" instance=ExtResource("1_biyqh")]
 z_index = 1
+metadata/_edit_lock_ = true
 
 [node name="Enemies" type="Node2D" parent="GameBoard"]
+metadata/_edit_lock_ = true
 
 [node name="Enemy" parent="GameBoard/Enemies" instance=ExtResource("9_sq0c2")]
 position = Vector2(2688, 1664)
@@ -176,8 +170,10 @@ move_speed = 256.0
 [node name="Player" parent="GameBoard" instance=ExtResource("9_p1nm4")]
 position = Vector2(384, 384)
 move_speed = 1280.0
+metadata/_edit_lock_ = true
 
 [node name="EnemiesPatrolKeyPoints" type="Node2D" parent="GameBoard"]
+metadata/_edit_lock_ = true
 
 [node name="Marker2D" type="Marker2D" parent="GameBoard/EnemiesPatrolKeyPoints" groups=["enemy_patrol_key_markers"]]
 position = Vector2(1167, 2171)
@@ -209,6 +205,21 @@ position = Vector2(2675, 3705)
 [node name="Marker2D10" type="Marker2D" parent="GameBoard/EnemiesPatrolKeyPoints" groups=["enemy_patrol_key_markers"]]
 position = Vector2(4731, 886)
 
+[node name="Interactables" type="Node2D" parent="GameBoard"]
+metadata/_edit_lock_ = true
+
+[node name="Lamp" parent="GameBoard/Interactables" instance=ExtResource("2_4k1k6")]
+position = Vector2(933, 426)
+
+[node name="Lamp2" parent="GameBoard/Interactables" instance=ExtResource("2_4k1k6")]
+position = Vector2(633, 1060)
+
+[node name="Vase" parent="GameBoard/Interactables" instance=ExtResource("3_ajq8e")]
+position = Vector2(1393, 1323)
+
+[node name="Table" parent="GameBoard/Interactables" instance=ExtResource("3_sjs5u")]
+position = Vector2(1671, 2821)
+
 [node name="Chase Theme" type="AudioStreamPlayer" parent="GameBoard"]
 stream = ExtResource("11_5p6yg")
 
@@ -218,9 +229,11 @@ stream = ExtResource("12_ymvjh")
 [node name="Suspicious Theme" type="AudioStreamPlayer" parent="GameBoard"]
 stream = ExtResource("13_pxk7a")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="GameBoard"]
 
-[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("1_8lp6y")]
+[node name="GameOverMenu" parent="GameBoard/CanvasLayer" instance=ExtResource("17_46fcv")]
+
+[node name="PauseMenu" parent="GameBoard/CanvasLayer" instance=ExtResource("1_8lp6y")]
 
 [connection signal="accept_pressed" from="GameBoard/Cursor" to="GameBoard" method="_on_cursor_accept_pressed"]
 [connection signal="cell_changed" from="GameBoard/Player" to="GameBoard" method="_on_player_cell_changed"]

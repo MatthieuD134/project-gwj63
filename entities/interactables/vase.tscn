@@ -4,6 +4,7 @@
 [ext_resource type="AudioStream" uid="uid://dexocg3wycnhh" path="res://Audio/GWJ#63 SD_Ceramic Breaking_1.ogg" id="2_l3wn7"]
 
 [node name="Vase" instance=ExtResource("1_gbaij")]
+owners_positions = PackedVector2Array(0, 0)
 animation_frames = 11
 animation_title = "VaseCrush"
 
