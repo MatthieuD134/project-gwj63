@@ -17,13 +17,16 @@ var footstepTimer : Timer
 
 var suspicious_target_cell  := Vector2(0,0)
 
+const RUNNING_SPEED : int = 256*2
+const WALKING_SPEED : int = 256
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	super()
 	footR = RandomNumberGenerator.new()
 	footstepTimer = get_child(get_child_count() - 1)
 	footstepTimer.start()
-	self.move_range = 10
+	self.move_range = 15
 	self.add_to_group("enemies")
 	self.trigger_movement_timer.set_one_shot(true)
 	var player = get_tree().get_first_node_in_group("player")
@@ -31,6 +34,7 @@ func _ready():
 		player.connect("cell_changed", _on_player_cell_changed )
 		player.connect("walk_finished", _on_player_walk_finished )
 	# start timer to trigger movement as well as setting game state
+	self.move_speed = WALKING_SPEED
 	self.current_state = game_state.PATROLLING
 	animation.play("Walk")
 
@@ -47,6 +51,12 @@ func update_game_state(state : game_state) -> void:
 			trigger_movement_timer.start()
 		else:
 			trigger_movement_timer.stop()
+		
+		if state == game_state.CHASING:
+			self.move_speed = RUNNING_SPEED
+		else:
+			self.move_speed = WALKING_SPEED
+		
 		changed_state.emit(self, prev_state, state)
 	else:
 		trigger_movement_timer.stop()
@@ -141,7 +151,7 @@ func _on_walk_finished(unit: Enemy, is_interuption: bool) -> void:
 				if is_interuption:
 					movement_triggered.emit(self)
 				else:
-					animation.play("Walk")
+					animation.play("Idle")
 					footstepTimer.start()
 					update_game_state(game_state.PATROLLING)
 

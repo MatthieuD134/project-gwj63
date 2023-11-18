@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cssxleiw3fu6" path="res://entities/interactables/lamp.tscn" id="2_4k1k6"]
 [ext_resource type="Script" path="res://scenes/common/game_board.gd" id="2_mfebm"]
 [ext_resource type="PackedScene" uid="uid://cs5jsca0e365j" path="res://entities/interactables/vase.tscn" id="3_ajq8e"]
-[ext_resource type="PackedScene" uid="uid://51mcls862hiy" path="res://entities/interactables/table.tscn" id="3_sjs5u"]
+[ext_resource type="PackedScene" path="res://entities/interactables/table.tscn" id="3_sjs5u"]
 [ext_resource type="Texture2D" uid="uid://cpk0gt8xxfr20" path="res://scenes/common/assets/floor_tile_shadow.png" id="4_u02gv"]
 [ext_resource type="Texture2D" uid="uid://bulg0hgq0jikw" path="res://scenes/common/assets/floor_tile.png" id="5_5tsgi"]
 [ext_resource type="Texture2D" uid="uid://cujmlhqv2wjcw" path="res://entities/interactables/Assets/table_sprite.png" id="5_o72sn"]

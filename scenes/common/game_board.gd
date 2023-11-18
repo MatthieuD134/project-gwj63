@@ -101,6 +101,19 @@ func _reinitialize() -> void:
 		# coordinates.
 #		_units[unit.cell] = unit
 
+func calculate_grid_distance(from_cell: Vector2, to_cell: Vector2) -> float:
+	var difference = (from_cell - to_cell).abs()
+	return difference.x + difference.y
+
+# function to be called by enemy to get the closest cell he can walk to when chasing or investigating
+func get_closest_walkable_cell_to_target(unit: Unit, target_cell: Vector2) -> Vector2:
+	var walkable_cells = get_walkable_cells(unit)
+	var closest_walkable_cell = unit.cell
+	for cell in walkable_cells:
+		if calculate_grid_distance(cell, target_cell) < calculate_grid_distance(closest_walkable_cell, target_cell):
+			closest_walkable_cell = cell
+	return closest_walkable_cell
+
 # Returns an array of cells a given unit can walk using the flood fill algorithm.
 func get_walkable_cells(unit: Unit) -> Array[Vector2]:
 	return _flood_fill(unit.cell, unit.move_range, unit == player)
@@ -160,7 +173,7 @@ func _move_unit(unit: Unit, new_cell: Vector2) -> void:
 	_pathfinder = PathFinder.new(grid, walkable_cells)
 	
 	if is_occupied(new_cell, unit == player) or not new_cell in walkable_cells:
-		return
+		new_cell = get_closest_walkable_cell_to_target(unit, new_cell)
 	
 	# When moving a unit, we need to update our `_units` dictionary. We instantly save it in the
 	# target cell even if the unit itself will take time to walk there.
