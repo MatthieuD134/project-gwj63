@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 class_name Interactable
 
 #This is the parent class for our three secondary tile details. We will create
@@ -61,10 +61,14 @@ func _on_player_cell_changed(old_cell : Vector2, cell : Vector2, actor : Unit):
 	if (owners.has(cell) && !owners.has(old_cell)) :
 		interact()
 		actor.interact(self)
+		if self.enable:
+			self.modulate.a = 0.5
 	else:
 		if (owners.has(old_cell) && !owners.has(cell)):
 			actor.interact(null)
 			reset()
+			if self.enable:
+				self.modulate.a = 1
 		
 #This function is the starting point of our interactable code and how they behave.
 func interact():
