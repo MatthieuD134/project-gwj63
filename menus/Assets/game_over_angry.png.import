@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6f4pxckmkb5q"
-path="res://.godot/imported/laser.png-c6d77cbb7518a331b41f80fe8a068a21.ctex"
+uid="uid://cynt63grgwavd"
+path="res://.godot/imported/game_over_angry.png-a67828f549f5890a9f8326eef4f7d899.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/cursor/assets/laser.png"
-dest_files=["res://.godot/imported/laser.png-c6d77cbb7518a331b41f80fe8a068a21.ctex"]
+source_file="res://menus/Assets/game_over_angry.png"
+dest_files=["res://.godot/imported/game_over_angry.png-a67828f549f5890a9f8326eef4f7d899.ctex"]
 
 [params]
 
