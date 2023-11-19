@@ -13,5 +13,6 @@ stream = ExtResource("2_e05mv")
 [node name="Sprite2D" parent="." index="2"]
 position = Vector2(4, -126)
 offset = Vector2(355, 2.08165e-12)
+frame = 0
 
 [node name="Marker2D" type="Marker2D" parent="OwnersMarkers" index="0"]

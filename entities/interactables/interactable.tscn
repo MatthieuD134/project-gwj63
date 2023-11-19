@@ -114,6 +114,7 @@ libraries = {
 texture = ExtResource("3_wtlss")
 hframes = 12
 vframes = 2
+frame = 11
 
 [node name="OwnersMarkers" type="Node2D" parent="."]
 
