@@ -61,7 +61,7 @@ func update_game_state(state : game_state) -> void:
 			var reaction_scene_instance = reaction_scene.instantiate()
 			reaction_scene_instance.set("label_text", "!")
 			$PathFollow2D/Sprite2D/reactions.add_child(reaction_scene_instance)
-		else:
+		elif state == game_state.PATROLLING:
 			self.move_speed = WALKING_SPEED
 		
 		
@@ -117,7 +117,10 @@ func chase_player(_player: Player) -> void:
 
 func check_suspicious_cell(suspicious_cell: Vector2) -> void:
 	self.suspicious_target_cell = suspicious_cell
-	animation.play("Walk")
+	if self.move_speed == self.RUNNING_SPEED:
+		animation.play("Run")
+	else:
+		animation.play("Walk")
 	footstepTimer.start()
 	self.update_game_state(game_state.SUSPICIOUS)
 	movement_triggered.emit(self)
