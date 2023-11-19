@@ -61,7 +61,7 @@ func update_game_state(state : game_state) -> void:
 			var reaction_scene_instance = reaction_scene.instantiate()
 			reaction_scene_instance.set("label_text", "!")
 			$PathFollow2D/Sprite2D/reactions.add_child(reaction_scene_instance)
-		else:
+		elif state == game_state.PATROLLING:
 			self.move_speed = WALKING_SPEED
 		
 		
