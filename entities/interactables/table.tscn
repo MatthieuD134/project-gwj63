@@ -7,7 +7,6 @@
 z_index = 10
 scale = Vector2(1, 1)
 infamy = 0
-owners_positions = PackedVector2Array(-256, -128, 2.08165e-12, -128, 256, -128, -256, 128, 2.08165e-12, 128, 256, 128)
 status_tags = PackedStringArray("HIDDEN")
 enable = true
 
@@ -20,3 +19,21 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_jp0w6")
 hframes = 1
 vframes = 1
+
+[node name="Marker2D2" type="Marker2D" parent="OwnersMarkers" index="0"]
+position = Vector2(-256, -128)
+
+[node name="Marker2D3" type="Marker2D" parent="OwnersMarkers" index="1"]
+position = Vector2(2.08165e-12, -128)
+
+[node name="Marker2D4" type="Marker2D" parent="OwnersMarkers" index="2"]
+position = Vector2(256, -128)
+
+[node name="Marker2D5" type="Marker2D" parent="OwnersMarkers" index="3"]
+position = Vector2(-256, 128)
+
+[node name="Marker2D6" type="Marker2D" parent="OwnersMarkers" index="4"]
+position = Vector2(2.08165e-12, 128)
+
+[node name="Marker2D7" type="Marker2D" parent="OwnersMarkers" index="5"]
+position = Vector2(256, 128)
