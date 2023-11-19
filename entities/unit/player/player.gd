@@ -8,13 +8,17 @@ var boardPiece : Interactable
 @onready var suspicious_chasers: Array[Enemy] = []
 @onready var detection_shape : DetectionShape = $PathFollow2D/PlayerDetectionShape
 
-var feet : AudioStreamPlayer
+var mewo : AudioStreamPlayer
 var ears : AudioListener2D
+var mewoR : RandomNumberGenerator
+@onready var feet : AnimationPlayer = $AnimationPlayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	super()
-	get_node("FootstepTimer").start()
+	feet.play("CatIdle")
+	mewoR = RandomNumberGenerator.new()
+	get_node("MewoTimer").start()
 	self.add_to_group("player")
 	ears = AudioListener2D.new()
 	ears.make_current()
@@ -23,6 +27,16 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	super(delta)
+	if (_is_walking):
+		if (is_being_chased()):
+			feet.play("catWalkChase")
+		else:
+			feet.play("catWalk")
+	else:
+		if (is_being_chased()):
+			feet.play("catIdleChase")
+		else:
+			feet.play("catIdle")
 
 #The player and enemy can deal with interactables in a specific way depending
 #on their game state. The cat will take status tags from fixtures and apply
@@ -59,6 +73,6 @@ func is_hidden():
 	return self._is_hidden
 
 
-
-func _on_footstep_timer_timeout():
-	pass # Replace with function body.
+func _on_mewo_timer_timeout():
+	mewo = get_node("Mewo " + str(mewoR.randi_range(1, 7)))
+	mewo.play()
