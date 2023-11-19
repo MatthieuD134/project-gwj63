@@ -1,8 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://ce1ekytxsmo8w"]
+[gd_scene load_steps=8 format=3 uid="uid://ce1ekytxsmo8w"]
 
 [ext_resource type="Script" path="res://menus/pause_menu.gd" id="1_wfghc"]
-[ext_resource type="Theme" uid="uid://clppkqi01qnwg" path="res://menus/new_theme.tres" id="2_8k2o1"]
+[ext_resource type="PackedScene" uid="uid://dr2elufkrq4q1" path="res://menus/simple-button.tscn" id="2_e2ur2"]
 [ext_resource type="PackedScene" uid="uid://d0wq5sfxok8kj" path="res://menus/options_menu.tscn" id="2_v1uqb"]
+[ext_resource type="Texture2D" uid="uid://qlyrpxx3r1l1" path="res://menus/Assets/Continue.png" id="3_omhiv"]
+[ext_resource type="Texture2D" uid="uid://6417b22smdws" path="res://menus/Assets/Opt.png" id="4_m0sal"]
+[ext_resource type="Texture2D" uid="uid://bbjutc26wdpqs" path="res://menus/Assets/Exit.png" id="5_d721o"]
+[ext_resource type="Texture2D" uid="uid://5i2yju14xp0n" path="res://menus/Assets/Back.png" id="5_dy7rq"]
 
 [node name="PauseMenu" type="Control"]
 process_mode = 3
@@ -33,41 +37,37 @@ layout_mode = 2
 theme_override_constants/separation = 25
 alignment = 1
 
-[node name="ContinueButton" type="Button" parent="PauseMenuContainer/VBoxContainer"]
+[node name="ContinueButton" parent="PauseMenuContainer/VBoxContainer" instance=ExtResource("2_e2ur2")]
 layout_mode = 2
 focus_neighbor_top = NodePath("../QuitButton")
 focus_neighbor_bottom = NodePath("../OptionsButton")
 focus_next = NodePath("../OptionsButton")
 focus_previous = NodePath("../QuitButton")
-theme = ExtResource("2_8k2o1")
-text = "Continue"
+texture_normal = ExtResource("3_omhiv")
 
-[node name="OptionsButton" type="Button" parent="PauseMenuContainer/VBoxContainer"]
+[node name="OptionsButton" parent="PauseMenuContainer/VBoxContainer" instance=ExtResource("2_e2ur2")]
 layout_mode = 2
 focus_neighbor_top = NodePath("../ContinueButton")
 focus_neighbor_bottom = NodePath("../MainMenuButton")
 focus_next = NodePath("../MainMenuButton")
 focus_previous = NodePath("../ContinueButton")
-theme = ExtResource("2_8k2o1")
-text = "Options"
+texture_normal = ExtResource("4_m0sal")
 
-[node name="MainMenuButton" type="Button" parent="PauseMenuContainer/VBoxContainer"]
+[node name="MainMenuButton" parent="PauseMenuContainer/VBoxContainer" instance=ExtResource("2_e2ur2")]
 layout_mode = 2
 focus_neighbor_top = NodePath("../OptionsButton")
 focus_neighbor_bottom = NodePath("../QuitButton")
 focus_next = NodePath("../QuitButton")
-focus_previous = NodePath("../OptionsButton")
-theme = ExtResource("2_8k2o1")
-text = "Main Menu"
+focus_previous = NodePath("../ContinueButton")
+texture_normal = ExtResource("5_dy7rq")
 
-[node name="QuitButton" type="Button" parent="PauseMenuContainer/VBoxContainer"]
+[node name="QuitButton" parent="PauseMenuContainer/VBoxContainer" instance=ExtResource("2_e2ur2")]
 layout_mode = 2
 focus_neighbor_top = NodePath("../MainMenuButton")
 focus_neighbor_bottom = NodePath("../ContinueButton")
 focus_next = NodePath("../ContinueButton")
 focus_previous = NodePath("../MainMenuButton")
-theme = ExtResource("2_8k2o1")
-text = "Quit"
+texture_normal = ExtResource("5_d721o")
 
 [node name="OptionsMenu" parent="." instance=ExtResource("2_v1uqb")]
 visible = false

@@ -37,7 +37,7 @@ func show_and_hide(first: Control, second: Control) -> void:
 		initialize_focus()
 
 func initialize_focus() -> void:
-	$MainMenuContainer/VBoxContainer/StartButton.grab_focus()
+	$MainMenuContainer/Control/StartButton.grab_focus()
 
 
 func _on_menu_music_finished():
