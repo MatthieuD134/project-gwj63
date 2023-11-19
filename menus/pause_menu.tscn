@@ -1,12 +1,12 @@
 [gd_scene load_steps=8 format=3 uid="uid://ce1ekytxsmo8w"]
 
 [ext_resource type="Script" path="res://menus/pause_menu.gd" id="1_wfghc"]
-[ext_resource type="PackedScene" path="res://menus/simple-button.tscn" id="2_e2ur2"]
+[ext_resource type="PackedScene" uid="uid://dr2elufkrq4q1" path="res://menus/simple-button.tscn" id="2_e2ur2"]
 [ext_resource type="PackedScene" uid="uid://d0wq5sfxok8kj" path="res://menus/options_menu.tscn" id="2_v1uqb"]
 [ext_resource type="Texture2D" uid="uid://qlyrpxx3r1l1" path="res://menus/Assets/Continue.png" id="3_omhiv"]
 [ext_resource type="Texture2D" uid="uid://6417b22smdws" path="res://menus/Assets/Opt.png" id="4_m0sal"]
 [ext_resource type="Texture2D" uid="uid://bbjutc26wdpqs" path="res://menus/Assets/Exit.png" id="5_d721o"]
-[ext_resource type="Texture2D" uid="uid://5i2yju14xp0n" path="res://menus/Assets/Back.png" id="5_dy7rq"]
+[ext_resource type="Texture2D" uid="uid://cu3oobmrcycr8" path="res://menus/Assets/Main_Menu.png" id="5_nlcie"]
 
 [node name="PauseMenu" type="Control"]
 process_mode = 3
@@ -59,7 +59,7 @@ focus_neighbor_top = NodePath("../OptionsButton")
 focus_neighbor_bottom = NodePath("../QuitButton")
 focus_next = NodePath("../QuitButton")
 focus_previous = NodePath("../ContinueButton")
-texture_normal = ExtResource("5_dy7rq")
+texture_normal = ExtResource("5_nlcie")
 
 [node name="QuitButton" parent="PauseMenuContainer/VBoxContainer" instance=ExtResource("2_e2ur2")]
 layout_mode = 2
