@@ -1,13 +1,147 @@
-[gd_scene load_steps=6 format=3 uid="uid://c2d3ue5lbvhdb"]
+[gd_scene load_steps=21 format=3 uid="uid://c2d3ue5lbvhdb"]
 
 [ext_resource type="Script" path="res://entities/unit/player/player.gd" id="1_67pey"]
-[ext_resource type="Texture2D" uid="uid://bss55ojtd5xol" path="res://entities/unit/player/assets/cat_sprite.png" id="2_ygg7e"]
+[ext_resource type="Texture2D" uid="uid://b2mgymx7v4uq5" path="res://entities/unit/player/assets/Cat.png" id="2_xrln2"]
 [ext_resource type="Script" path="res://entities/unit/player/detection_shape.gd" id="3_umma2"]
+[ext_resource type="AudioStream" uid="uid://b23lf82sej077" path="res://Audio/GWJ#63 SD_Cat Mewo_1.ogg" id="4_8qqn2"]
+[ext_resource type="AudioStream" uid="uid://hvou26uvxf6c" path="res://Audio/GWJ#63 SD_Cat Mewo_2.ogg" id="5_xlnng"]
+[ext_resource type="AudioStream" uid="uid://bipa1xkg33shr" path="res://Audio/GWJ#63 SD_Cat Mewo_3.ogg" id="6_m7r1t"]
+[ext_resource type="AudioStream" uid="uid://dvw4x6idve3iv" path="res://Audio/GWJ#63 SD_Cat Mewo_4.ogg" id="7_dx71c"]
+[ext_resource type="AudioStream" uid="uid://de7lsbvanlps7" path="res://Audio/GWJ#63 SD_Cat Mewo_5.ogg" id="8_r151s"]
+[ext_resource type="AudioStream" uid="uid://digcmosoca1sr" path="res://Audio/GWJ#63 SD_Cat Mewo_6.ogg" id="9_tv0c1"]
+[ext_resource type="AudioStream" uid="uid://bepjpwmwp74ym" path="res://Audio/GWJ#63 SD_Cat Mewo_7.ogg" id="10_jrkki"]
 
 [sub_resource type="Curve2D" id="Curve2D_yi8uf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_32q3q"]
 radius = 100.0
+
+[sub_resource type="Animation" id="Animation_gjwk7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [32]
+}
+
+[sub_resource type="Animation" id="Animation_bgful"]
+resource_name = "catIdle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_vlafj"]
+resource_name = "catWalk"
+length = 0.625
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [32, 33, 34, 35, 36]
+}
+
+[sub_resource type="Animation" id="Animation_umw0m"]
+resource_name = "catRun"
+length = 0.625
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [16, 17, 18, 19, 20]
+}
+
+[sub_resource type="Animation" id="Animation_dn8do"]
+resource_name = "catWalkChase"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0625, 0.125, 0.1875, 0.25, 0.3125, 0.375, 0.4375),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11, 12, 13, 14, 15]
+}
+
+[sub_resource type="Animation" id="Animation_lipu1"]
+resource_name = "catHuntChase"
+length = 0.3125
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0625, 0.125, 0.1875, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [24, 25, 26, 27, 28]
+}
+
+[sub_resource type="Animation" id="Animation_mop7s"]
+resource_name = "catIdleChase"
+length = 0.3125
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow2D/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0625, 0.125, 0.1875, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [40, 41, 42, 43, 44]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7nqoi"]
+_data = {
+"RESET": SubResource("Animation_gjwk7"),
+"catHunt": SubResource("Animation_umw0m"),
+"catHuntChase": SubResource("Animation_lipu1"),
+"catIdle": SubResource("Animation_vlafj"),
+"catIdleChase": SubResource("Animation_mop7s"),
+"catWalk": SubResource("Animation_bgful"),
+"catWalkChase": SubResource("Animation_dn8do")
+}
 
 [node name="Player" type="Path2D" node_paths=PackedStringArray("sprite") groups=["player"]]
 curve = SubResource("Curve2D_yi8uf")
@@ -19,8 +153,10 @@ rotates = false
 loop = false
 
 [node name="Sprite2D" type="Sprite2D" parent="PathFollow2D"]
-texture = ExtResource("2_ygg7e")
-hframes = 5
+texture = ExtResource("2_xrln2")
+hframes = 8
+vframes = 6
+frame = 32
 
 [node name="PlayerDetectionShape" type="Area2D" parent="PathFollow2D" node_paths=PackedStringArray("unit")]
 collision_mask = 0
@@ -31,8 +167,32 @@ unit = NodePath("../..")
 shape = SubResource("CircleShape2D_32q3q")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_7nqoi")
+}
 
-[node name="FootstepTimer" type="Timer" parent="."]
-wait_time = 0.334
+[node name="MewoTimer" type="Timer" parent="."]
+wait_time = 20.0
 
-[connection signal="timeout" from="FootstepTimer" to="." method="_on_footstep_timer_timeout"]
+[node name="Mewo 1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_8qqn2")
+
+[node name="Mewo 2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_xlnng")
+
+[node name="Mewo 3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_m7r1t")
+
+[node name="Mewo 4" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_dx71c")
+
+[node name="Mewo 5" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_r151s")
+
+[node name="Mewo 6" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_tv0c1")
+
+[node name="Mewo 7" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_jrkki")
+
+[connection signal="timeout" from="MewoTimer" to="." method="_on_mewo_timer_timeout"]

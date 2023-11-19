@@ -313,6 +313,7 @@ animation = NodePath("../../AnimationPlayer")
 [node name="Table3" parent="GameBoard/Interactables/Table/Table" node_paths=PackedStringArray("animation") instance=ExtResource("3_sjs5u")]
 position = Vector2(8078, 1041)
 animation = NodePath("../../AnimationPlayer")
+infamy = 0
 
 [node name="Chase Theme" type="AudioStreamPlayer" parent="GameBoard"]
 stream = ExtResource("11_5p6yg")
