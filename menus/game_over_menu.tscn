@@ -1,9 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://d1pul4l3dxtvt"]
+[gd_scene load_steps=11 format=3 uid="uid://d1pul4l3dxtvt"]
 
 [ext_resource type="Theme" uid="uid://clppkqi01qnwg" path="res://menus/new_theme.tres" id="1_kd8dc"]
 [ext_resource type="Script" path="res://menus/game_over_menu.gd" id="2_gbktr"]
 [ext_resource type="PackedScene" uid="uid://d0wq5sfxok8kj" path="res://menus/options_menu.tscn" id="2_yei38"]
+[ext_resource type="PackedScene" uid="uid://dr2elufkrq4q1" path="res://menus/simple-button.tscn" id="3_ybmyt"]
 [ext_resource type="Texture2D" uid="uid://bk2q3dyl5bo13" path="res://menus/Assets/game_over_cuddle.png" id="4_djbbv"]
+[ext_resource type="Texture2D" uid="uid://cu3oobmrcycr8" path="res://menus/Assets/Main_Menu.png" id="4_jv7y8"]
+[ext_resource type="Texture2D" uid="uid://bbjutc26wdpqs" path="res://menus/Assets/Exit.png" id="5_4odeh"]
 [ext_resource type="Texture2D" uid="uid://chk6h2xv0dkc5" path="res://menus/Assets/game_over_spray.png" id="5_lr507"]
 [ext_resource type="Texture2D" uid="uid://cynt63grgwavd" path="res://menus/Assets/game_over_angry.png" id="6_kpt23"]
 [ext_resource type="Texture2D" uid="uid://di678wtlqt18k" path="res://menus/Assets/Winner.png" id="7_yj1pj"]
@@ -53,21 +56,21 @@ layout_mode = 2
 theme_override_constants/separation = 25
 alignment = 1
 
-[node name="MainMenuButton" type="Button" parent="PauseMenuContainer/VBoxContainer2/VBoxContainer"]
+[node name="MainMenuButton" parent="PauseMenuContainer/VBoxContainer2/VBoxContainer" instance=ExtResource("3_ybmyt")]
 layout_mode = 2
 focus_neighbor_top = NodePath("../QuitButton")
 focus_neighbor_bottom = NodePath("../QuitButton")
 focus_next = NodePath("../QuitButton")
 focus_previous = NodePath("../QuitButton")
-text = "Main Menu"
+texture_normal = ExtResource("4_jv7y8")
 
-[node name="QuitButton" type="Button" parent="PauseMenuContainer/VBoxContainer2/VBoxContainer"]
+[node name="QuitButton" parent="PauseMenuContainer/VBoxContainer2/VBoxContainer" instance=ExtResource("3_ybmyt")]
 layout_mode = 2
 focus_neighbor_top = NodePath("../MainMenuButton")
 focus_neighbor_bottom = NodePath("../MainMenuButton")
 focus_next = NodePath("../MainMenuButton")
 focus_previous = NodePath("../MainMenuButton")
-text = "Quit"
+texture_normal = ExtResource("5_4odeh")
 
 [node name="OptionsMenu" parent="." instance=ExtResource("2_yei38")]
 visible = false

@@ -4,6 +4,7 @@
 [ext_resource type="AudioStream" uid="uid://c3jbfdp2syuxq" path="res://Audio/GWJ#63 SD_Lamp falling_3.ogg" id="2_e05mv"]
 
 [node name="Lamp" instance=ExtResource("1_xuf0o")]
+scale = Vector2(1, 1)
 animation_frames = 12
 animation_title = "LampTopple"
 
@@ -11,7 +12,7 @@ animation_title = "LampTopple"
 stream = ExtResource("2_e05mv")
 
 [node name="Sprite2D" parent="." index="2"]
-position = Vector2(4, -126)
+position = Vector2(-178, -50)
 offset = Vector2(355, 2.08165e-12)
 
 [node name="Marker2D" type="Marker2D" parent="OwnersMarkers" index="0"]
