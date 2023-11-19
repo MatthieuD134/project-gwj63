@@ -325,6 +325,7 @@ stream = ExtResource("12_ymvjh")
 stream = ExtResource("13_pxk7a")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="GameBoard"]
+process_mode = 3
 
 [node name="GameOverMenu" parent="GameBoard/CanvasLayer" instance=ExtResource("17_46fcv")]
 

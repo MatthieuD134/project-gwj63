@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://dr2elufkrq4q1"]
+
+[ext_resource type="Texture2D" uid="uid://bc0fusg7ffgoq" path="res://menus/Assets/Start.png" id="1_t4tht"]
+[ext_resource type="Script" path="res://menus/simple-button.gd" id="2_bm1at"]
+
+[node name="SimpleButton" type="TextureButton"]
+offset_right = 623.0
+offset_bottom = 176.0
+scale = Vector2(0.75, 0.75)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource("1_t4tht")
+stretch_mode = 5
+script = ExtResource("2_bm1at")
+
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
+[connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

@@ -1,9 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://c11ukiuclxo6b"]
+[gd_scene load_steps=10 format=3 uid="uid://c11ukiuclxo6b"]
 
 [ext_resource type="Script" path="res://menus/main_menu.gd" id="1_dxvbe"]
 [ext_resource type="Theme" uid="uid://clppkqi01qnwg" path="res://menus/new_theme.tres" id="1_o288g"]
 [ext_resource type="PackedScene" uid="uid://d0wq5sfxok8kj" path="res://menus/options_menu.tscn" id="2_r4jcl"]
+[ext_resource type="Texture2D" uid="uid://bffl7xh5sty71" path="res://menus/Assets/SplashBack.png" id="3_fxalq"]
 [ext_resource type="AudioStream" uid="uid://cypppdltspytd" path="res://menus/Assets/GWJ63_Music_Menu_1.ogg" id="3_hsena"]
+[ext_resource type="PackedScene" uid="uid://dr2elufkrq4q1" path="res://menus/simple-button.tscn" id="4_b5ouh"]
+[ext_resource type="Texture2D" uid="uid://b7djn3vuv52qx" path="res://menus/Assets/Title_Merged.png" id="4_q7et3"]
+[ext_resource type="Texture2D" uid="uid://6417b22smdws" path="res://menus/Assets/Opt.png" id="6_vcgm5"]
+[ext_resource type="Texture2D" uid="uid://bbjutc26wdpqs" path="res://menus/Assets/Exit.png" id="7_o6hx7"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -15,6 +20,16 @@ grow_vertical = 2
 theme = ExtResource("1_o288g")
 script = ExtResource("1_dxvbe")
 
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_fxalq")
+expand_mode = 3
+
 [node name="MainMenuContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
@@ -22,44 +37,79 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -125.0
-offset_top = -109.5
-offset_right = 125.0
-offset_bottom = 109.5
+offset_left = -837.0
+offset_top = -500.0
+offset_right = 837.0
+offset_bottom = 500.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainMenuContainer"]
+[node name="Control" type="Control" parent="MainMenuContainer"]
 layout_mode = 2
-theme_override_constants/separation = 25
-alignment = 1
 
-[node name="StartButton" type="Button" parent="MainMenuContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
+[node name="TextureRect" type="TextureRect" parent="MainMenuContainer/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -452.0
+offset_top = -37.0
+offset_right = 737.0
+offset_bottom = 682.0
+grow_horizontal = 2
+scale = Vector2(0.75, 0.75)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("4_q7et3")
+stretch_mode = 3
+
+[node name="StartButton" parent="MainMenuContainer/Control" instance=ExtResource("4_b5ouh")]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.58
+anchor_right = 0.3
+anchor_bottom = 0.58
+offset_left = 8.67999
+offset_top = 7.0
+offset_right = 179.7
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_neighbor_left = NodePath("../QuitButton")
 focus_neighbor_top = NodePath("../QuitButton")
+focus_neighbor_right = NodePath("../OptionsButton")
 focus_neighbor_bottom = NodePath("../OptionsButton")
 focus_next = NodePath("../OptionsButton")
 focus_previous = NodePath("../QuitButton")
-text = "Start"
 
-[node name="OptionsButton" type="Button" parent="MainMenuContainer/VBoxContainer"]
+[node name="OptionsButton" parent="MainMenuContainer/Control" instance=ExtResource("4_b5ouh")]
 layout_mode = 2
-size_flags_vertical = 3
+offset_left = 596.0
+offset_top = 706.0
+offset_right = 975.0
+offset_bottom = 825.0
+focus_neighbor_left = NodePath("../StartButton")
 focus_neighbor_top = NodePath("../StartButton")
+focus_neighbor_right = NodePath("../QuitButton")
 focus_neighbor_bottom = NodePath("../QuitButton")
 focus_next = NodePath("../QuitButton")
 focus_previous = NodePath("../StartButton")
-text = "Options"
+texture_normal = ExtResource("6_vcgm5")
 
-[node name="QuitButton" type="Button" parent="MainMenuContainer/VBoxContainer"]
+[node name="QuitButton" parent="MainMenuContainer/Control" instance=ExtResource("4_b5ouh")]
 layout_mode = 2
-size_flags_vertical = 3
+offset_left = 759.0
+offset_top = 792.0
+offset_right = 1331.0
+offset_bottom = 1069.0
+focus_neighbor_left = NodePath("../OptionsButton")
 focus_neighbor_top = NodePath("../OptionsButton")
+focus_neighbor_right = NodePath("../StartButton")
 focus_neighbor_bottom = NodePath("../StartButton")
 focus_next = NodePath("../StartButton")
-focus_previous = NodePath("../OptionsButton")
-text = "Quit"
+focus_previous = NodePath(".")
+texture_normal = ExtResource("7_o6hx7")
 
 [node name="OptionsMenu" parent="." instance=ExtResource("2_r4jcl")]
 visible = false
@@ -69,8 +119,8 @@ layout_mode = 1
 stream = ExtResource("3_hsena")
 autoplay = true
 
-[connection signal="pressed" from="MainMenuContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="MainMenuContainer/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
-[connection signal="pressed" from="MainMenuContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="MainMenuContainer/Control/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="MainMenuContainer/Control/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="MainMenuContainer/Control/QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="back_button_pressed" from="OptionsMenu" to="." method="_on_options_menu_back_button_pressed"]
 [connection signal="finished" from="MenuMusic" to="." method="_on_menu_music_finished"]

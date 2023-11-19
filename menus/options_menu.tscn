@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://d0wq5sfxok8kj"]
+[gd_scene load_steps=5 format=3 uid="uid://d0wq5sfxok8kj"]
 
 [ext_resource type="Theme" uid="uid://clppkqi01qnwg" path="res://menus/new_theme.tres" id="1_de1v8"]
 [ext_resource type="Script" path="res://menus/options_menu.gd" id="1_r3a8w"]
+[ext_resource type="PackedScene" uid="uid://dr2elufkrq4q1" path="res://menus/simple-button.tscn" id="3_cie6y"]
+[ext_resource type="Texture2D" uid="uid://5i2yju14xp0n" path="res://menus/Assets/Back.png" id="4_6hqvc"]
 
 [node name="OptionsMenu" type="Control"]
 layout_mode = 3
@@ -31,8 +33,8 @@ grow_vertical = 2
 layout_mode = 2
 theme_override_constants/separation = 25
 
-[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="BackButton" parent="MarginContainer/VBoxContainer" instance=ExtResource("3_cie6y")]
 layout_mode = 2
-text = "Back"
+texture_normal = ExtResource("4_6hqvc")
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
