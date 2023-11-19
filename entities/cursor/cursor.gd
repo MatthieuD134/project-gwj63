@@ -37,6 +37,7 @@ var cell := Vector2.ZERO : set = set_cell
 @onready var _timer: Timer = $Timer
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var follow_mouse := true
+@onready var attention : AnimationPlayer = $AnimationPlayer
 
 
 # --------------------
@@ -126,16 +127,21 @@ func set_cell(value: Vector2) -> void:
 
 func draw_attention() -> void:
 	follow_mouse = false
-	var tween = get_tree().create_tween()
-	# animate the global position of the laser sprite to randomly go around the center of the current selected cell
-	var number_of_position := 10
-	var movement_range = (grid.cell_size / 3 as Vector2).x
-	for i in range(number_of_position):
-		tween.tween_property(sprite, "global_position", get_random_position_around(self.global_position, movement_range, movement_range), .5/number_of_position)
-	# once tween is finished, bring back posibility to move the mouse again
-	var resume_mouse_follow = func(): follow_mouse = true
-	tween.connect("finished", resume_mouse_follow)
+	attention.play("cursorSelect")
+	#var tween = get_tree().create_tween()
+	## animate the global position of the laser sprite to randomly go around the center of the current selected cell
+	#var number_of_position := 10
+	#var movement_range = (grid.cell_size / 3 as Vector2).x
+	#for i in range(number_of_position):
+	#	tween.tween_property(sprite, "global_position", get_random_position_around(self.global_position, movement_range, movement_range), .5/number_of_position)
+	## once tween is finished, bring back posibility to move the mouse again
+	#var resume_mouse_follow = func(): follow_mouse = true
+	#tween.connect("finished", resume_mouse_follow)
 
 
 func get_random_position_around(pos: Vector2, rangeX: float, rangeY: float) -> Vector2:
 	return pos + Vector2(randf_range(-rangeX, rangeX), randf_range(-rangeY, rangeY))
+
+
+func _on_animation_player_animation_finished(anim_name):
+	follow_mouse = true
