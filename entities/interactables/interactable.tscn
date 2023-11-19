@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://entities/interactables/interactable.gd" id="1_1in0o"]
 [ext_resource type="AudioStream" uid="uid://dy2ndsmp7a0gr" path="res://Audio/GWJ#63 SD_Ceramic Smash_28.ogg" id="2_j67iw"]
-[ext_resource type="Texture2D" uid="uid://b5xce0snioe0e" path="res://entities/interactables/Assets/Furniture.png" id="3_wtlss"]
+[ext_resource type="Texture2D" uid="uid://dk7io5q2nobg0" path="res://entities/interactables/Assets/Furniture.png" id="3_wtlss"]
 
 [sub_resource type="Animation" id="Animation_me8wy"]
 resource_name = "LampTopple"
