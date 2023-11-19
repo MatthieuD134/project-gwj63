@@ -97,6 +97,7 @@ texture_region_size = Vector2i(256, 256)
 0:0/0 = 0
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-128, -128, 128, -128, 128, 128, -128, 128)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ni3fd"]
 texture = ExtResource("7_p4cjq")
@@ -313,7 +314,6 @@ animation = NodePath("../../AnimationPlayer")
 [node name="Table3" parent="GameBoard/Interactables/Table/Table" node_paths=PackedStringArray("animation") instance=ExtResource("3_sjs5u")]
 position = Vector2(8078, 1041)
 animation = NodePath("../../AnimationPlayer")
-infamy = 0
 
 [node name="Chase Theme" type="AudioStreamPlayer" parent="GameBoard"]
 stream = ExtResource("11_5p6yg")
