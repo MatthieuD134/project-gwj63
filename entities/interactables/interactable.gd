@@ -39,7 +39,7 @@ func _ready():
 		if marker as Marker2D:
 			owners.append(grid.calculate_grid_coordinates(marker.global_position))
 	
-	if emitting_cell:
+	if emitting_marker:
 		emitting_cell = grid.calculate_grid_coordinates(emitting_marker.global_position)
 	else: 
 		emitting_cell = grid.calculate_grid_coordinates(self.global_position)
