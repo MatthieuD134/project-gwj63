@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://d1pul4l3dxtvt"]
+[gd_scene load_steps=7 format=3 uid="uid://d1pul4l3dxtvt"]
 
 [ext_resource type="Theme" uid="uid://clppkqi01qnwg" path="res://menus/new_theme.tres" id="1_kd8dc"]
 [ext_resource type="Script" path="res://menus/game_over_menu.gd" id="2_gbktr"]
 [ext_resource type="PackedScene" uid="uid://d0wq5sfxok8kj" path="res://menus/options_menu.tscn" id="2_yei38"]
+[ext_resource type="Texture2D" uid="uid://bk2q3dyl5bo13" path="res://menus/Assets/game_over_cuddle.png" id="4_djbbv"]
+[ext_resource type="Texture2D" uid="uid://chk6h2xv0dkc5" path="res://menus/Assets/game_over_spray.png" id="5_lr507"]
+[ext_resource type="Texture2D" uid="uid://cynt63grgwavd" path="res://menus/Assets/game_over_angry.png" id="6_kpt23"]
 
 [node name="GameOverMenu" type="Control"]
 process_mode = 3
@@ -68,6 +71,41 @@ text = "Quit"
 [node name="OptionsMenu" parent="." instance=ExtResource("2_yei38")]
 visible = false
 layout_mode = 1
+
+[node name="CuddleTime" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_djbbv")
+
+[node name="Spray" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_lr507")
+
+[node name="Anger" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_kpt23")
+
+[node name="Win" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [connection signal="pressed" from="PauseMenuContainer/VBoxContainer2/VBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
 [connection signal="pressed" from="PauseMenuContainer/VBoxContainer2/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
