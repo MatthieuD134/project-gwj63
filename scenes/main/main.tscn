@@ -342,6 +342,12 @@ position = Vector2(2688, 1664)
 move_range = 10
 move_speed = 256.0
 
+[node name="Enemy2" parent="GameBoard/Enemies" instance=ExtResource("9_sq0c2")]
+position = Vector2(4224, 4224)
+
+[node name="Enemy3" parent="GameBoard/Enemies" instance=ExtResource("9_sq0c2")]
+position = Vector2(2176, 8320)
+
 [node name="Player" parent="GameBoard" instance=ExtResource("9_p1nm4")]
 position = Vector2(384, 384)
 move_speed = 1280.0
