@@ -5,8 +5,7 @@ class_name Interactable
 #a template here for our three types to follow.
 
 @export var infamy : int = 1
-@export var owners_positions : PackedVector2Array
-@export var emitting_position: Vector2
+@export var emitting_marker: Marker2D
 @export_group("Animation")
 @export var animation : AnimationPlayer
 @export var animation_frames : int
@@ -35,10 +34,16 @@ func _ready():
 	if player as Player:
 		player.connect("cell_changed", _on_player_cell_changed )
 	
-	for owner_position in owners_positions:
-		owners.append(grid.calculate_grid_coordinates(owner_position + self.global_position))
+	var ownerMarkers = $OwnersMarkers.get_children()
+	for marker in ownerMarkers:
+		if marker as Marker2D:
+			owners.append(grid.calculate_grid_coordinates(marker.global_position))
 	
-	emitting_cell = grid.calculate_grid_coordinates(emitting_position + self.global_position)
+	if emitting_cell:
+		emitting_cell = grid.calculate_grid_coordinates(emitting_marker.global_position)
+	else: 
+		emitting_cell = grid.calculate_grid_coordinates(self.global_position)
+
 	if (enable):
 		report_owners()
 	break_reset = break_time
